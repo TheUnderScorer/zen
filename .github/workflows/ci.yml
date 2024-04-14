@@ -62,8 +62,6 @@ jobs:
           node-version-file: .node-version
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
-      - uses: nrwl/nx-set-shas@v4
-
       - name: Release
         run: pnpm exec nx run-many --target=semantic-release --all --parallel --maxParallel=1
         env:
