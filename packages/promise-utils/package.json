@@ -1,6 +1,6 @@
 {
   "name": "@theunderscorer/promise-utils",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "dependencies": {},
   "private": false,
   "sideEffects": false,
