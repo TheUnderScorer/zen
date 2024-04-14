@@ -34,7 +34,7 @@ export default async function (tree: Tree, schema: LibraryGeneratorOptions) {
         executor: '@theunderscorer/nx-semantic-release:semantic-release',
         options: {
           buildTarget: `${schema.name}:build`,
-          tagFormat: `${schema}-v$\{VERSION}`,
+          tagFormat: `${schema.name}-v$\{VERSION}`,
           outputPath,
         },
       },

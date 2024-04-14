@@ -12,6 +12,14 @@
         "outputPath": "dist/packages/wait",
         "inputFiles": ["index.ts"]
       }
+    },
+    "semantic-release": {
+      "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+      "options": {
+        "buildTarget": "wait:build",
+        "tagFormat": "wait-v${VERSION}",
+        "outputPath": "dist/packages/wait"
+      }
     }
   }
 }

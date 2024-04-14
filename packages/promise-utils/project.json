@@ -12,6 +12,14 @@
         "outputPath": "dist/packages/promise-utils",
         "inputFiles": ["index.ts"]
       }
+    },
+    "semantic-release": {
+      "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+      "options": {
+        "buildTarget": "promise-utils:build",
+        "tagFormat": "promise-utils-v${VERSION}",
+        "outputPath": "dist/packages/promise-utils"
+      }
     }
   }
 }
