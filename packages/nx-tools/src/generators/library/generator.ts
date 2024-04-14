@@ -5,7 +5,7 @@ import {
   installPackagesTask,
   joinPathFragments,
   Tree,
-  logger,
+  logger
 } from '@nx/devkit';
 import { LibraryGeneratorOptions } from './schema';
 import * as path from 'node:path';
@@ -17,7 +17,8 @@ export default async function(tree: Tree, schema: LibraryGeneratorOptions) {
       'packages',
       schema.name
     );
-  const importPath = `@theunderscorer/${schema.name}`
+  const importPath = `@theunderscorer/${schema.name}`;
+  const outputPath = `dist/packages/${schema.name}`;
 
   logger.info(`Creating library ${schema.name} in ${libraryRoot}`);
 
@@ -34,15 +35,23 @@ export default async function(tree: Tree, schema: LibraryGeneratorOptions) {
             '{options.outputPath}'
           ],
           options: {
-            outputPath: `dist/packages/${schema.name}`,
+            outputPath,
             inputFiles: [
               'index.ts'
             ]
           }
+        },
+        'semantic-release': {
+          executor: '@theunderscorer/nx-semantic-release:semantic-release',
+          options: {
+            buildTarget: `${schema.name}:build`,
+            tagFormat: `${schema}-v$\{VERSION}`,
+            outputPath
+          }
         }
       }
 
-    },
+    }
   );
 
   generateFiles(
@@ -62,7 +71,7 @@ export default async function(tree: Tree, schema: LibraryGeneratorOptions) {
         'index.ts'
       )
     ]
-  )
+  );
 
   await formatFiles(tree);
 
