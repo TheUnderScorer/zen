@@ -1,0 +1,12 @@
+{
+  "name": "@theunderscorer/promise-utils",
+  "version": "0.0.1",
+  "dependencies": {},
+  "private": false,
+  "sideEffects": false,
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public",
+    "registry": "https://registry.npmjs.org/"
+  }
+}

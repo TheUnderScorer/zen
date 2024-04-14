@@ -1,0 +1,17 @@
+{
+  "name": "promise-utils",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/promise-utils/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "nx-tools:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/promise-utils",
+        "inputFiles": ["index.ts"]
+      }
+    }
+  }
+}
