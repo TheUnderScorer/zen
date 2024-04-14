@@ -1,0 +1,21 @@
+{
+  "name": "<%= name %>",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/<%= name %>/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "nx-tools:rollup",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/<%= name %>",
+        "inputFiles": [
+          "index.ts"
+        ]
+      }
+    }
+  }
+}
