@@ -1,6 +1,20 @@
 # <%= name %>
 
-This library was generated with [Nx](https://nx.dev).
+This library was generated with [Nx](https://nx.dev) and is part of the Zen, a library collection made by [TheUnderScorer](https://github.com/TheUnderScorer).
+
+![logo.png](../../assets/logo.png)
+
+## Install
+
+With pnpm:
+```bash
+pnpm add @theunderscorer/<%= name %>
+```
+
+With npm:
+```bash
+npm install @theunderscorer/<%= name %>
+```
 
 ## Building
 
