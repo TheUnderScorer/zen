@@ -1,3 +1,9 @@
+## [1.1.1](https://github.com/TheUnderScorer/zen/compare/typed-di-v1.1.0...typed-di-v1.1.1) (2024-04-14)
+
+### Bug Fixes
+
+- rename declaration symbol ([bb952a0](https://github.com/TheUnderScorer/zen/commit/bb952a0e43b6d5a2de2f7d1e6a84344bf65d6d86))
+
 # [1.1.0](https://github.com/TheUnderScorer/zen/compare/typed-di-v1.0.0...typed-di-v1.1.0) (2024-04-14)
 
 ### Features
