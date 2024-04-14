@@ -37,7 +37,5 @@
       "default": []
     }
   },
-  "required": [
-    "inputFiles"
-  ]
+  "required": ["inputFiles"]
 }

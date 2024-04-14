@@ -1,3 +1,3 @@
-export interface LibraryGeneratorOptions  {
-  name: string
+export interface LibraryGeneratorOptions {
+  name: string;
 }

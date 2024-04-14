@@ -205,7 +205,7 @@ export class Resolver<T, R extends ResolversMap> implements Disposable {
     container.cache.set(this.name, value);
 
     if (this.cacheResolvedPromises && value instanceof Promise) {
-      void value.then(resolved => {
+      void value.then((resolved) => {
         container.cache.set(this.name, resolved);
       });
     }

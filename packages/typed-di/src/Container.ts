@@ -24,7 +24,7 @@ import { nanoid } from './nanoid';
 
 export class Container<
   Items extends Record<string, any> = Record<string, any>,
-  Resolvers extends ResolversMap = ResolversMap,
+  Resolvers extends ResolversMap = ResolversMap
 > implements Disposable
 {
   /**
@@ -102,7 +102,7 @@ export class Container<
         // Return own keys excluding current resolution stack, in order to avoid circular dependencies
         ownKeys: () => {
           return Object.keys(this.resolvers).filter(
-            p => !this.resolutionStack.includes(p)
+            (p) => !this.resolutionStack.includes(p)
           );
         },
         getOwnPropertyDescriptor: (target: any, key: string) => {
@@ -386,7 +386,7 @@ export class Container<
   async dispose(silent = false) {
     const children = Array.from(this.children);
 
-    await Promise.all(children.map(child => child.dispose()));
+    await Promise.all(children.map((child) => child.dispose()));
 
     await this.clearCache(silent);
 
@@ -407,12 +407,12 @@ export class Container<
 
     if (this.parent) {
       resolvers = resolvers.filter(
-        resolver => resolver.lifeTime !== LifeTime.Singleton
+        (resolver) => resolver.lifeTime !== LifeTime.Singleton
       );
     }
 
     await Promise.all(
-      resolvers.map(resolver =>
+      resolvers.map((resolver) =>
         resolver.dispose({
           silent,
         })

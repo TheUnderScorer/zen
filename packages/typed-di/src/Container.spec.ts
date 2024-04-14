@@ -13,18 +13,18 @@ const addDays = (date: Date, days: number) => {
   return result;
 };
 
-const wait = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
+const wait = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('Container', () => {
   it('should register items', () => {
     const container = Container.create()
       .register({
         key: 'now',
-        factory: () => new Date()
+        factory: () => new Date(),
       })
       .register({
         key: 'tomorrow',
-        factory: store => addDays(store.now, 1)
+        factory: (store) => addDays(store.now, 1),
       });
 
     expect(container.has('now')).toBe(true);
@@ -36,7 +36,7 @@ describe('Container', () => {
   it('should resolve items using "items" proxy', () => {
     const container = Container.create().register({
       key: 'now',
-      factory: () => new Date()
+      factory: () => new Date(),
     });
 
     expect(container.items.now).toBeInstanceOf(Date);
@@ -53,7 +53,7 @@ describe('Container', () => {
   it('should throw on circular dependencies', () => {
     const container = Container.create().register({
       key: 'date',
-      factory: store => store.date
+      factory: (store) => store.date,
     });
 
     expect(() => container.resolve('date')).toThrow(
@@ -64,11 +64,11 @@ describe('Container', () => {
   it('should register many items', () => {
     const container = Container.create().registerMany({
       now: {
-        factory: () => new Date()
+        factory: () => new Date(),
       },
       id: {
-        factory: () => 1
-      }
+        factory: () => 1,
+      },
     });
 
     expect(Object.values(container.items).length).toBe(2);
@@ -77,7 +77,7 @@ describe('Container', () => {
   it('should support getting items without cache', async () => {
     const container = Container.create().register({
       key: 'date',
-      factory: () => new Date()
+      factory: () => new Date(),
     });
 
     const date1 = container.build('date');
@@ -93,7 +93,7 @@ describe('Container', () => {
     const container = Container.create().register({
       key: 'date',
       factory: () => new Date(),
-      lifeTime: LifeTime.Singleton
+      lifeTime: LifeTime.Singleton,
     });
 
     container.resolve('date');
@@ -119,14 +119,14 @@ describe('Container', () => {
   it('should automatically dispose disposable items', async () => {
     const dispose = jest.fn<any>();
     const disposable: Disposable = {
-      dispose
+      dispose,
     };
 
     const container = Container.create({
-      defaultLifetime: LifeTime.Singleton
+      defaultLifetime: LifeTime.Singleton,
     }).register({
       key: 'disposable',
-      factory: () => disposable
+      factory: () => disposable,
     });
 
     container.resolve('disposable');
@@ -137,18 +137,18 @@ describe('Container', () => {
   });
 
   it('should handle promises', async () => {
-    const disposer = jest.fn(async v => expect(await v).toEqual(5));
+    const disposer = jest.fn(async (v) => expect(await v).toEqual(5));
 
     const container = Container.create()
       .register({
         key: 'promise',
         factory: async () => 5,
         lifeTime: LifeTime.Singleton,
-        disposer
+        disposer,
       })
       .register({
         key: 'sum',
-        factory: async store => (await store.promise) + 2
+        factory: async (store) => (await store.promise) + 2,
       });
 
     const result = await container.resolve('sum');
@@ -164,23 +164,23 @@ describe('Container', () => {
     const container = Container.create()
       .register({
         key: 'now',
-        factory: () => new Date()
+        factory: () => new Date(),
       })
       .register({
         key: 'tomorrow',
-        factory: store => addDays(store.now, 1)
+        factory: (store) => addDays(store.now, 1),
       })
       .register({
         key: 'serjestce',
-        factory: store => {
+        factory: (store) => {
           const newStore = {
             ...store,
             isTest: true,
-            serjestce: () => store.now.valueOf() + store.tomorrow.valueOf()
+            serjestce: () => store.now.valueOf() + store.tomorrow.valueOf(),
           };
 
           return newStore.serjestce;
-        }
+        },
       });
 
     const serjestce = container.resolve('serjestce');
@@ -198,11 +198,11 @@ describe('Container', () => {
           nowCreatedTimes++;
 
           return new Date();
-        }
+        },
       })
       .register({
         key: 'tomorrow',
-        factory: store => addDays(store.now, 1)
+        factory: (store) => addDays(store.now, 1),
       });
 
     const firstNow = container.resolve('now');
@@ -229,15 +229,15 @@ describe('Container', () => {
 
           return new Date();
         },
-        lifeTime: LifeTime.Singleton
+        lifeTime: LifeTime.Singleton,
       })
       .register({
         key: 'tomorrow',
-        factory: store => {
+        factory: (store) => {
           tomorrowCreatedTimes++;
 
           return addDays(store.now, 1);
-        }
+        },
       });
 
     const firstNow = container.resolve('now');
@@ -266,11 +266,11 @@ describe('Container', () => {
     const container = Container.create().register({
       factory: () => new Date(),
       key: 'now',
-      disposer: now => {
+      disposer: (now) => {
         expect(now).toBeInstanceOf(Date);
 
         dispose();
-      }
+      },
     });
 
     container.resolve('now');
@@ -291,12 +291,12 @@ describe('Container', () => {
       .register({
         key: 'id',
         factory: () => Date.now().toString(),
-        disposer
+        disposer,
       })
       .register({
         key: 'idAddon',
-        factory: store => `${store.id}-addon`,
-        lifeTime: LifeTime.Singleton
+        factory: (store) => `${store.id}-addon`,
+        lifeTime: LifeTime.Singleton,
       });
 
     const idAddon = container.items.idAddon;
@@ -333,13 +333,13 @@ describe('Container', () => {
         factory: () => {
           return new Date();
         },
-        lifeTime: LifeTime.Singleton
+        lifeTime: LifeTime.Singleton,
       })
       .register({
         key: 'tomorrow',
-        factory: store => {
+        factory: (store) => {
           return addDays(store.now, 1);
-        }
+        },
       });
 
     const firstTomorrow = container.resolve('tomorrow');
@@ -348,8 +348,8 @@ describe('Container', () => {
 
     const secondTomorrow = container.resolve('tomorrow', {
       injectionParams: {
-        now: new Date()
-      }
+        now: new Date(),
+      },
     });
 
     expect(firstTomorrow.valueOf()).not.toEqual(secondTomorrow.valueOf());
@@ -360,7 +360,7 @@ describe('Container', () => {
       const container = Container.create().register({
         key: 'now',
         factory: () => new Date(),
-        lifeTime: LifeTime.Scoped
+        lifeTime: LifeTime.Scoped,
       });
 
       const firstScope = container.createScope();
@@ -382,12 +382,12 @@ describe('Container', () => {
         .declare<'id', string>('id')
         .register({
           key: 'idAddon',
-          factory: store => store.id + '-addon'
+          factory: (store) => store.id + '-addon',
         });
 
       const scope = container.createScope().register({
         key: 'id',
-        factory: () => 'scoped-id'
+        factory: () => 'scoped-id',
       });
 
       expect(scope.items.idAddon).toBe('scoped-id-addon');
@@ -400,7 +400,7 @@ describe('Container', () => {
         factory: () => new Date(),
         key: 'now',
         lifeTime: LifeTime.Transient,
-        disposer: transientDisposer
+        disposer: transientDisposer,
       });
 
       container.resolve('now');
@@ -425,13 +425,13 @@ describe('Container', () => {
           key: 'now',
           factory: () => new Date(),
           lifeTime: LifeTime.Scoped,
-          disposer: scopedDisposer
+          disposer: scopedDisposer,
         })
         .register({
           key: 'id',
           factory: () => 'id',
           lifeTime: LifeTime.Singleton,
-          disposer: parentDisposer
+          disposer: parentDisposer,
         });
 
       const scope = container.createScope();
@@ -447,14 +447,14 @@ describe('Container', () => {
 
     it('should dispose scoped items', async () => {
       const disposable: Disposable = {
-        dispose: jest.fn<any>()
+        dispose: jest.fn<any>(),
       };
 
       const container = Container.create().register({
         key: 'now',
         factory: () => new Date(),
         lifeTime: LifeTime.Scoped,
-        disposer: () => disposable.dispose()
+        disposer: () => disposable.dispose(),
       });
 
       const scope = container.createScope();
@@ -472,7 +472,7 @@ describe('Container', () => {
         factory: () => {
           return new Date();
         },
-        key: 'now'
+        key: 'now',
       });
 
       const child = container.createScope();
@@ -496,16 +496,16 @@ describe('Container', () => {
             singletonItemCreatedTimes++;
 
             return new Date();
-          }
+          },
         })
         .register({
           key: 'tomorrow',
-          factory: store => {
+          factory: (store) => {
             scopedItemCreatedTimes++;
 
             return addDays(store.now, 1);
           },
-          lifeTime: LifeTime.Scoped
+          lifeTime: LifeTime.Scoped,
         });
 
       const firstChild = rootContainer.createScope();

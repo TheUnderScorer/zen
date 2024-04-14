@@ -21,31 +21,29 @@ npm install @theunderscorer/chain
 ```
 
 ## Usage
+
 ```ts
-import { Chain } from "@theunderscorer/chain";
+import { Chain } from '@theunderscorer/chain';
 
 const chain = new Chain<
-  (
-    number: number,
-    next: (number: number) => Promise<number>
-  ) => Promise<number>
+  (number: number, next: (number: number) => Promise<number>) => Promise<number>
 >();
 
 chain.use(async (number, next) => {
-  console.log("First middleware", number);
+  console.log('First middleware', number);
   const result = await next(number + 1);
-  console.log("First middleware result", result);
+  console.log('First middleware result', result);
   return result;
 });
 
 chain.use(async (number, next) => {
-  console.log("Second middleware", number);
+  console.log('Second middleware', number);
   return number + 1;
 });
 
 const result = await chain.exec(1);
 
-console.log("Result", result); // 3
+console.log('Result', result); // 3
 ```
 
 ## Building

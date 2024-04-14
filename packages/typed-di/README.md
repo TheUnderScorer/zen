@@ -9,7 +9,7 @@ This library was generated with [Nx](https://nx.dev).
 ### Creating container
 
 ```ts
-import {Container} from '@theunderscorer/typed-di';
+import { Container } from '@theunderscorer/typed-di';
 
 const myContainer = Container.create();
 ```
@@ -17,41 +17,42 @@ const myContainer = Container.create();
 ### Registering items
 
 ```ts
-import {Container} from '@theunderscorer/typed-di';
+import { Container } from '@theunderscorer/typed-di';
 
-const myContainer = Container
-  .create()
+const myContainer = Container.create()
   .register({
     key: 'now',
     factory: () => new Date(),
   })
   .register({
     key: 'tomorrow',
-    factory: store => {
+    factory: (store) => {
       const tomorrow = new Date(store.now);
 
       tomorrow.setDate(tomorrow.getDate() + 1);
 
       return tomorrow;
-    }
+    },
   });
 
 console.log(myContainer.resolve('tomorrow'));
 //OR
 console.log(myContainer.items.tomorrow);
 
-console.log(myContainer.resolve('tomorrow', {
-  injectionParams: {
-    // Provide custom params that will be injected while resolving item
-    now: new Date(),
-  },
-}));
+console.log(
+  myContainer.resolve('tomorrow', {
+    injectionParams: {
+      // Provide custom params that will be injected while resolving item
+      now: new Date(),
+    },
+  })
+);
 ```
 
 ### Singleton registrations
 
 ```ts
-import {Container, LifeTime} from '@theunderscorer/typed-di';
+import { Container, LifeTime } from '@theunderscorer/typed-di';
 
 const container = Container.create()
   .register({
@@ -60,27 +61,26 @@ const container = Container.create()
   })
   .register({
     key: 'sum',
-    factory: store => store.randomNumber + 2,
+    factory: (store) => store.randomNumber + 2,
     lifeTime: LifeTime.Singleton,
   });
 
 const sum = container.items.sum;
 const secondSum = container.items.sum;
 
-console.log(sum === secondSum) // true
+console.log(sum === secondSum); // true
 ```
-> **Warning!** If a singleton is resolved, and it depends on a transient registration, those will remain in the singleton for it's lifetime!
 
+> **Warning!** If a singleton is resolved, and it depends on a transient registration, those will remain in the singleton for it's lifetime!
 
 ### Creating scope
 
 ```ts
-import {Container, LifeTime, Disposable} from '@theunderscorer/typed-di';
-import {User} from './types';
+import { Container, LifeTime, Disposable } from '@theunderscorer/typed-di';
+import { User } from './types';
 
 class TasksService implements Disposable {
-  constructor(private readonly currentUser: User) {
-  }
+  constructor(private readonly currentUser: User) {}
 
   getTasks() {
     // Some magic that returns tasks for current user!
@@ -91,14 +91,13 @@ class TasksService implements Disposable {
   }
 }
 
-const myContainer = Container
-  .create()
+const myContainer = Container.create()
   // Declare that "currentUser" will have type "User", but don't register anything yet
   .declare<'currentUser', User>('currentUser')
   .register({
     key: 'tasksService',
     // store: {currentUser: User}
-    factory: store => new TasksService(store.currentUser),
+    factory: (store) => new TasksService(store.currentUser),
     lifetime: LifeTime.Scoped,
     // Because "TasksService" implements "Disposable", the "dispose" method will be called after container is disposed.
     // Alternatively, you can provide custom dispose logic here as well.
@@ -132,7 +131,6 @@ app.get('/messages', async (req, res) => {
 
   return res.send(200, await tasksService.getTasks());
 });
-
 ```
 
 ## Building

@@ -1,5 +1,5 @@
 import { RollupExecutorOptions } from '@nx/rollup/src/executors/rollup/schema';
 
 export interface RollupExecutorSchema extends RollupExecutorOptions {
-  name: string
+  name: string;
 }
