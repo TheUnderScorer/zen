@@ -8,7 +8,6 @@
     [
       "@semantic-release/exec",
       {
-        "verifyConditionsCmd": "./verify.sh",
         "prepareCmd": "nx format:write --all"
       }
     ]
