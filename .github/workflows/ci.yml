@@ -11,25 +11,22 @@ permissions:
   contents: read
 
 jobs:
-  main:
+  tests:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
           fetch-depth: 0
-
       # Connect your workspace on nx.app and uncomment this to enable task distribution.
       # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "build" targets have been requested
       # - run: pnpm exec nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents-after="build"
-
-      
       - uses: pnpm/action-setup@v2
         with:
           version: 8
       # Cache node_modules
       - uses: actions/setup-node@v3
         with:
-          node-version: 20
+          node-version: .node-version
           cache: 'pnpm'
       - run: pnpm install --frozen-lockfile
       - uses: nrwl/nx-set-shas@v4
@@ -39,3 +36,39 @@ jobs:
 
       - run: pnpm exec nx-cloud record -- nx format:check
       - run: pnpm exec nx affected -t lint test build
+
+  release:
+    if: github.ref == 'refs/heads/main'
+    needs:
+      - tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Configure CI Git User
+        run: |
+          git config --global user.name 'TheUnderScorer'
+          git config --global user.email 'przemyslawzydek@gmail.com'
+          git remote set-url origin https://TheUnderScorer:$GITHUB_TOKEN@github.com/TheUnderScorer/zen
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 8
+      - uses: actions/setup-node@v3
+        with:
+          node-version: .node-version
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
+      - uses: nrwl/nx-set-shas@v4
+
+      - name: Release
+        run: pnpm exec nx run-many --target=semantic-release --all --parallel --maxParallel=1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GH_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+          HUSKY: 0
+
+
