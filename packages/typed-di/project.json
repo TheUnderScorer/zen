@@ -1,0 +1,21 @@
+{
+  "name": "typed-di",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/typed-di/src",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "nx-tools:rollup",
+      "outputs": [
+        "{options.outputPath}"
+      ],
+      "options": {
+        "outputPath": "dist/packages/typed-di",
+        "inputFiles": [
+          "index.ts"
+        ]
+      }
+    }
+  }
+}

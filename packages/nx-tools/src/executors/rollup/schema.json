@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/schema",
+  "version": 2,
+  "title": "Rollup executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "inputFiles": {
+      "type": "array",
+      "description": "Input files",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    },
+    "rollupConfig": {
+      "type": "string",
+      "description": "Path to the rollup config file",
+      "default": "rollup.config.js"
+    },
+    "watch": {
+      "type": "boolean",
+      "description": "Watch for changes and rebuild",
+      "default": false
+    },
+    "outputPath": {
+      "type": "string",
+      "description": "Output directory",
+      "default": "dist"
+    },
+    "additionalPeerDeps": {
+      "type": "array",
+      "description": "Additional peer dependencies to include in the bundle",
+      "items": {
+        "type": "string"
+      },
+      "default": []
+    }
+  },
+  "required": [
+    "inputFiles"
+  ]
+}
