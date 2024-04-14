@@ -135,7 +135,7 @@ export async function updatePackageJson(
           continue;
         }
 
-        result.peerDependencies[dep.name] = `^${libPackageJson.version}`;
+        result.dependencies[dep.name] = `^${libPackageJson.version}`;
       }
     }
   }
