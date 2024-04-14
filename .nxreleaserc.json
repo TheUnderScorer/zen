@@ -3,5 +3,14 @@
   "npm": true,
   "github": true,
   "repositoryUrl": "https://github.com/TheUnderScorer/zen",
-  "branches": ["main"]
+  "branches": ["main"],
+  "plugins": [
+    [
+      "@semantic-release/exec",
+      {
+        "verifyConditionsCmd": "./verify.sh",
+        "prepareCmd": "nx format:write --all"
+      }
+    ]
+  ]
 }
