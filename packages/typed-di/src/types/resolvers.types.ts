@@ -1,5 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { MaybePromise } from './common.types';
 import {
   ContainerKey,
   declarationSymbol,
@@ -8,6 +7,7 @@ import {
   ResolversMap,
 } from './container.types';
 import type { Resolver } from '../Resolver';
+import { MaybePromise } from '@theunderscorer/promise-utils';
 
 export type ResolverRecordEntry<Items extends ResolversMap = ResolversMap> =
   Omit<ResolverParams<any, any, Items>, 'key'>;
