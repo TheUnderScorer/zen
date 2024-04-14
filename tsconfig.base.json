@@ -21,7 +21,10 @@
     "noFallthroughCasesInSwitch": true,
     "baseUrl": ".",
     "paths": {
+      "@theunderscorer/chain": ["packages/chain/src/index.ts"],
+      "@theunderscorer/promise-utils": ["packages/promise-utils/src/index.ts"],
       "@theunderscorer/typed-di": ["packages/typed-di/src/index.ts"],
+      "@theunderscorer/wait": ["packages/wait/src/index.ts"],
       "nx-tools": ["packages/nx-tools/src/index.ts"]
     }
   },
