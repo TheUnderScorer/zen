@@ -2,7 +2,7 @@
 import type { Resolver } from '../Resolver';
 import type { Container } from '../Container';
 
-export const declarationSymbol = Symbol('mahobinDeclaration');
+export const declarationSymbol = Symbol('typedDiDeclaration');
 
 export type ContainerKey = string | symbol | number;
 
