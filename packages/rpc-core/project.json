@@ -2,9 +2,7 @@
   "name": "rpc-core",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/rpc-core/src",
-  "implicitDependencies": [
-    "nx-tools"
-  ],
+  "implicitDependencies": ["nx-tools"],
   "targets": {
     "build": {
       "executor": "nx-tools:rollup",

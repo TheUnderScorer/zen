@@ -2,9 +2,7 @@
   "name": "rpc-in-memory-link",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/rpc-in-memory-link/src",
-  "implicitDependencies": [
-    "nx-tools"
-  ],
+  "implicitDependencies": ["nx-tools"],
   "targets": {
     "build": {
       "executor": "nx-tools:rollup",
