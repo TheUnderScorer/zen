@@ -75,7 +75,10 @@ export async function updatePackageJson(
 
             const format = resolveExportsFormat(output.format, output.file);
 
-            if (format === 'require') {
+            if (
+              format === 'require' ||
+              (options.onlyEsm && format === 'import')
+            ) {
               result.main = filePath;
             }
 

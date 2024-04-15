@@ -81,7 +81,9 @@ export function buildRollupConfig(
           ...input,
           output: {
             ...commonOutput,
-            file: `${outputPath}/${fileName}.esm.js`,
+            file: options.onlyEsm
+              ? `${outputPath}/${fileName}.js`
+              : `${outputPath}/${fileName}.esm.js`,
             format: 'esm',
           },
         },
