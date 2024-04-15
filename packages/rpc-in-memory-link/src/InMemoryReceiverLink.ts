@@ -1,8 +1,8 @@
 import { Handlers } from './handlers';
 import {
   Observable,
-  OperationKind,
-  OperationName,
+  RpcOperationKind,
+  RpcOperationName,
   OperationRequest,
   OperationResponse,
   ReceiverLink,
@@ -15,14 +15,14 @@ export class InMemoryReceiverLink<Ctx = any> implements ReceiverLink<Ctx> {
   async sendResponse<Payload, Result>(
     response: OperationResponse<Result, OperationRequest<Payload, Ctx>>
   ) {
-    if (response.operationKind === OperationKind.Event) {
+    if (response.operationKind === RpcOperationKind.Event) {
       await this.handlers.event.next(response);
     } else {
       await this.handlers.operationResult.next(response);
     }
   }
 
-  receiveRequest(name: OperationName) {
+  receiveRequest(name: RpcOperationName) {
     return this.handlers.operation
       .lift()
       .filter((req) => req.name === name) as Observable<

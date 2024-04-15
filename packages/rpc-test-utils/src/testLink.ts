@@ -1,12 +1,12 @@
 import {
   ClientLink,
-  Observable, OperationKind,
-  OperationName,
+  Observable,
+  RpcOperationKind,
+  RpcOperationName,
   OperationRequest,
   OperationResponse,
-  ReceiverLink
+  ReceiverLink,
 } from '@theunderscorer/rpc-core';
-
 
 export function createTestLink() {
   const clientLink = {
@@ -23,13 +23,13 @@ export function createTestLink() {
   const newResponse = new Observable<OperationResponse>();
   const newEvent = new Observable<OperationResponse>();
 
-  receiverLink.receiveRequest.mockImplementation((name: OperationName) => {
+  receiverLink.receiveRequest.mockImplementation((name: RpcOperationName) => {
     return newRequest.lift().filter((req) => req.name === name);
   });
 
   receiverLink.sendResponse.mockImplementation(
     async (response: OperationResponse) => {
-      if (response.operationKind === OperationKind.Event) {
+      if (response.operationKind === RpcOperationKind.Event) {
         await newEvent.next(response);
       } else {
         await newResponse.next(response);

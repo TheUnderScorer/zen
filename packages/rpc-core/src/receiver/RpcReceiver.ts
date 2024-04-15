@@ -1,7 +1,7 @@
 import {
   ExtractPayload,
-  OperationKind,
-  OperationName,
+  RpcOperationKind,
+  RpcOperationName,
   OperationsSchema,
 } from '../schema/schema.types';
 import {
@@ -18,7 +18,7 @@ import { MaybePromise } from '../shared/promise';
 import { LinkParam } from '../shared/link.types';
 import { createLinks } from '../shared/link';
 import { OperationReceiverBuilder } from './OperationReceiverBuilder';
-import { OperationDefinition } from '../schema/OperationDefinition';
+import { RpcOperationDefinition } from '../schema/RpcOperationDefinition';
 import { Chain } from '@theunderscorer/chain';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -43,9 +43,9 @@ export class RpcReceiver<S extends OperationsSchema, Ctx = any> {
     handler: OperationHandler<S['queries'][Name], Ctx>
   ) {
     return this.subscribeToOperation(
-      name as OperationName,
+      name as RpcOperationName,
       handler,
-      OperationKind.Query
+      RpcOperationKind.Query
     );
   }
 
@@ -54,9 +54,9 @@ export class RpcReceiver<S extends OperationsSchema, Ctx = any> {
     handler: OperationHandler<S['commands'][Name], Ctx>
   ) {
     return this.subscribeToOperation(
-      name as OperationName,
+      name as RpcOperationName,
       handler,
-      OperationKind.Command
+      RpcOperationKind.Command
     );
   }
 
@@ -69,13 +69,13 @@ export class RpcReceiver<S extends OperationsSchema, Ctx = any> {
       typeof payload,
       OperationRequest<unknown, Ctx>
     >(
-      name as OperationName,
-      OperationKind.Event,
+      name as RpcOperationName,
+      RpcOperationKind.Event,
       null,
       validatePayload(
         this.schema,
-        OperationKind.Event,
-        name as OperationName,
+        RpcOperationKind.Event,
+        name as RpcOperationName,
         payload
       ),
       null,
@@ -90,7 +90,7 @@ export class RpcReceiver<S extends OperationsSchema, Ctx = any> {
     Op extends S['queries'][Key],
     OpCtx
   >(name: Key): OperationReceiverBuilder<Op, Ctx & OpCtx> {
-    const definition = this.schema.queries[name as OperationName] as Op;
+    const definition = this.schema.queries[name as RpcOperationName] as Op;
 
     return this.createBuilder<typeof definition, OpCtx>(definition);
   }
@@ -100,13 +100,13 @@ export class RpcReceiver<S extends OperationsSchema, Ctx = any> {
     Op extends S['commands'][Key],
     OpCtx
   >(name: Key): OperationReceiverBuilder<Op, Ctx & OpCtx> {
-    const definition = this.schema.commands[name as OperationName] as Op;
+    const definition = this.schema.commands[name as RpcOperationName] as Op;
 
     return this.createBuilder<Op, OpCtx>(definition);
   }
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  private createBuilder<Operation extends OperationDefinition<any>, OpCtx>(
+  private createBuilder<Operation extends RpcOperationDefinition<any>, OpCtx>(
     operation: Operation
   ): OperationReceiverBuilder<Operation, Ctx & OpCtx> {
     return new OperationReceiverBuilder<Operation, Ctx & OpCtx>(
@@ -136,9 +136,9 @@ export class RpcReceiver<S extends OperationsSchema, Ctx = any> {
   }
 
   private subscribeToOperation<Payload, Result>(
-    name: OperationName,
+    name: RpcOperationName,
     handler: (payload: Payload, ctx: Ctx) => MaybePromise<Result>,
-    kind: OperationKind
+    kind: RpcOperationKind
   ) {
     const chain = new Chain<ReceiveRequestFn<Ctx>>();
 

@@ -1,8 +1,8 @@
 import {
   ExtractPayload,
   ExtractResult,
-  OperationKind,
-  OperationName,
+  RpcOperationKind,
+  RpcOperationName,
   OperationsSchema,
   OptionalPayload,
 } from '../schema/schema.types';
@@ -50,9 +50,9 @@ export class RpcClient<S extends OperationsSchema, Ctx = any> {
     const [payload, channel] = params;
 
     return this.sendOperation(
-      name as OperationName,
+      name as RpcOperationName,
       payload,
-      OperationKind.Query,
+      RpcOperationKind.Query,
       channel
     );
   }
@@ -73,9 +73,9 @@ export class RpcClient<S extends OperationsSchema, Ctx = any> {
   ): Promise<ExtractResult<S['commands'][Name]>> {
     const [payload, channel] = params;
     return this.sendOperation(
-      name as OperationName,
+      name as RpcOperationName,
       payload,
-      OperationKind.Command,
+      RpcOperationKind.Command,
       channel
     );
   }
@@ -96,8 +96,8 @@ export class RpcClient<S extends OperationsSchema, Ctx = any> {
     channel?: Channel
   ): Observable<OperationEvent<ExtractPayload<S['events'][Name]>, Ctx>> {
     const request = new OperationRequest<unknown, Ctx>(
-      name as OperationName,
-      OperationKind.Event,
+      name as RpcOperationName,
+      RpcOperationKind.Event,
       {},
       channel
     );
@@ -113,7 +113,7 @@ export class RpcClient<S extends OperationsSchema, Ctx = any> {
     return chain.exec(request).map((event) => ({
       payload: validatePayload(
         this.schema,
-        OperationKind.Event,
+        RpcOperationKind.Event,
         event.operationName,
         event.unwrap()
       ),
@@ -121,10 +121,10 @@ export class RpcClient<S extends OperationsSchema, Ctx = any> {
     }));
   }
 
-  private async sendOperation<Name extends OperationName, Payload, Result>(
+  private async sendOperation<Name extends RpcOperationName, Payload, Result>(
     name: Name,
     payload: Payload,
-    kind: OperationKind,
+    kind: RpcOperationKind,
     channel?: Channel
   ): Promise<Result> {
     const request = new OperationRequest<Payload, Ctx>(

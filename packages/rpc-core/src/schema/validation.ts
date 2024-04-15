@@ -1,11 +1,15 @@
-import { OperationKind, OperationName, OperationsSchema } from './schema.types';
+import {
+  RpcOperationKind,
+  RpcOperationName,
+  OperationsSchema,
+} from './schema.types';
 import { ZodSchema } from 'zod';
 import { validateZod } from '../zod/validateZod';
 
 export function validatePayload<S extends OperationsSchema, P>(
   schema: S,
-  kind: OperationKind,
-  name: OperationName,
+  kind: RpcOperationKind,
+  name: RpcOperationName,
   payload: P
 ) {
   const operationKey = resolveSchemaKey(kind);
@@ -21,8 +25,8 @@ export function validatePayload<S extends OperationsSchema, P>(
 
 export function validateResult<S extends OperationsSchema, R>(
   schema: S,
-  kind: OperationKind,
-  name: OperationName,
+  kind: RpcOperationKind,
+  name: RpcOperationName,
   result: R
 ) {
   const operationKey = resolveSchemaKey(kind);
@@ -36,15 +40,17 @@ export function validateResult<S extends OperationsSchema, R>(
   return result;
 }
 
-export function resolveSchemaKey(kind: OperationKind): keyof OperationsSchema {
+export function resolveSchemaKey(
+  kind: RpcOperationKind
+): keyof OperationsSchema {
   switch (kind) {
-    case OperationKind.Command:
+    case RpcOperationKind.Command:
       return 'commands';
 
-    case OperationKind.Query:
+    case RpcOperationKind.Query:
       return 'queries';
 
-    case OperationKind.Event:
+    case RpcOperationKind.Event:
       return 'events';
 
     default:

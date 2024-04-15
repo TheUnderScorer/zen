@@ -1,5 +1,5 @@
 import { OperationRequest } from './OperationRequest';
-import { OperationKind } from '../schema/schema.types';
+import { RpcOperationKind } from '../schema/schema.types';
 import { Channel } from './communication.types';
 import { z } from 'zod';
 import { OperationEnvelope } from './OperationEnvelope';
@@ -8,7 +8,7 @@ import { safeStringify } from '../utils/json';
 
 const operationResponseSchema = z.object({
   operationName: z.string(),
-  operationKind: z.nativeEnum(OperationKind),
+  operationKind: z.nativeEnum(RpcOperationKind),
   request: z.union([OperationRequest.schema, z.null()]).optional(),
   result: z.unknown().optional(),
   error: z.unknown().optional(),
@@ -31,7 +31,7 @@ export class OperationResponse<
 
   constructor(
     public operationName: string,
-    public operationKind: OperationKind,
+    public operationKind: RpcOperationKind,
     public request: Request | null,
     public result: Result | null,
     public error: Error | null,
@@ -95,7 +95,7 @@ export class OperationResponse<
     Ctx = Request['ctx']
   >(
     operationName: string,
-    operationKind: OperationKind,
+    operationKind: RpcOperationKind,
     result: R,
     req: Request | null,
     ctx?: Ctx
@@ -117,7 +117,7 @@ export class OperationResponse<
     Ctx = Req['ctx']
   >(
     operationName: string,
-    operationKind: OperationKind,
+    operationKind: RpcOperationKind,
     error: unknown,
     req: Req | null,
     ctx?: Ctx

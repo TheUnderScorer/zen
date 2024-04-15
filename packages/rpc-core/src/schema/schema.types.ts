@@ -1,30 +1,31 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import { z, ZodSchema } from 'zod';
-import { OperationDefinition } from './OperationDefinition';
+import { RpcOperationDefinition } from './RpcOperationDefinition';
 
 export type QueryDefinition<
-  Name extends OperationName,
+  Name extends RpcOperationName,
   Payload,
   Result
-> = OperationDefinition<OperationKind.Query, Name, Payload, Result>;
+> = RpcOperationDefinition<RpcOperationKind.Query, Name, Payload, Result>;
 
 export type CommandDefinition<
-  Name extends OperationName,
+  Name extends RpcOperationName,
   Payload,
   Result
-> = OperationDefinition<OperationKind.Command, Name, Payload, Result>;
+> = RpcOperationDefinition<RpcOperationKind.Command, Name, Payload, Result>;
 
 export type EventDefinition<
-  Name extends OperationName,
+  Name extends RpcOperationName,
   Payload
-> = OperationDefinition<OperationKind.Event, Name, Payload, void>;
+> = RpcOperationDefinition<RpcOperationKind.Event, Name, Payload, void>;
 
-export type DefinitionsRecord<Entry extends OperationDefinition<any, any>> = {
-  [key: OperationName]: Entry;
-};
+export type DefinitionsRecord<Entry extends RpcOperationDefinition<any, any>> =
+  {
+    [key: RpcOperationName]: Entry;
+  };
 
-export enum OperationKind {
+export enum RpcOperationKind {
   Query = 'query',
   Command = 'command',
   Event = 'event',
@@ -32,22 +33,21 @@ export enum OperationKind {
 
 export type OptionalPayload<T> = T extends undefined | null ? true : false;
 
-export type ExtractPayload<P extends OperationDefinition<any, any>> =
+export type ExtractPayload<P extends RpcOperationDefinition<any, any>> =
   ExtractZod<P['payload']>;
 
-export type ExtractResult<P extends OperationDefinition<any, any>> = ExtractZod<
-  P['result']
->;
+export type ExtractResult<P extends RpcOperationDefinition<any, any>> =
+  ExtractZod<P['result']>;
 
 export type ExtractZod<T> = T extends ZodSchema ? z.infer<T> : T;
 
-export type OperationName = string;
+export type RpcOperationName = string;
 
-export type OperationsSchemaLike = {
+export interface RpcOperationsSchemaLike {
   queries: any;
   commands: any;
   events: any;
-};
+}
 
 export interface OperationsSchema<
   Queries extends DefinitionsRecord<

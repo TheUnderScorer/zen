@@ -1,10 +1,10 @@
 import { ZodError } from 'zod';
-import { OperationDefinitionProperties } from '../schema/OperationDefinition';
+import { RpcOperationDefinitionProperties } from '../schema/RpcOperationDefinition';
 
 export class RpcZodError extends ZodError {
   constructor(
     errors: ZodError['errors'],
-    readonly operation: OperationDefinitionProperties
+    readonly operation: RpcOperationDefinitionProperties
   ) {
     super(errors);
   }

@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any,@typescript-eslint/no-non-null-assertion */
-import { OperationDefinition } from './OperationDefinition';
+import { RpcOperationDefinition } from './RpcOperationDefinition';
 import { OperationSchemaOperations, OperationsSchema } from './schema.types';
 import { mapObject } from '../utils/map';
 import { MergeAll } from '../shared/merge';
@@ -7,7 +7,7 @@ import { MergeAll } from '../shared/merge';
 export function getOperationFromSchema<
   S extends OperationsSchema,
   Key extends OperationSchemaOperations<S>
->(schema: S, key: Key): OperationDefinition {
+>(schema: S, key: Key): RpcOperationDefinition {
   const k = key as any;
 
   const operation = schema.commands[k] || schema.queries[k] || schema.events[k];
@@ -33,15 +33,15 @@ export function defineRpcSchema<S extends OperationsSchema>(schema: S) {
 }
 
 export function query() {
-  return OperationDefinition.query();
+  return RpcOperationDefinition.query();
 }
 
 export function command() {
-  return OperationDefinition.command();
+  return RpcOperationDefinition.command();
 }
 
 export function event() {
-  return OperationDefinition.event();
+  return RpcOperationDefinition.event();
 }
 
 export const operation = {

@@ -4,7 +4,7 @@ export * from './receiver/receiver.types';
 export * from './receiver/RpcReceiver';
 export * from './schema/schema.types';
 export * from './schema/schemaHelpers';
-export * from './schema/OperationDefinition';
+export * from './schema/RpcOperationDefinition';
 export * from './shared/OperationRequest';
 export * from './shared/OperationResponse';
 export * from './shared/communication.types';

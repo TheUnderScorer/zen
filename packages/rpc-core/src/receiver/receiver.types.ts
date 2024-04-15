@@ -3,15 +3,15 @@ import { OperationResponse } from '../shared/OperationResponse';
 import {
   ExtractPayload,
   ExtractResult,
-  OperationName,
+  RpcOperationName,
 } from '../schema/schema.types';
-import { OperationDefinition } from '../schema/OperationDefinition';
+import { RpcOperationDefinition } from '../schema/RpcOperationDefinition';
 import { MaybePromise } from '../shared/promise';
 import { Observable } from '../observable/Observable';
 
 export type ReceiveRequestFn<Ctx = unknown> = (
-  name: OperationName,
-  next: (name: OperationName) => Observable<OperationRequest<unknown, Ctx>>
+  name: RpcOperationName,
+  next: (name: RpcOperationName) => Observable<OperationRequest<unknown, Ctx>>
 ) => Observable<OperationRequest<unknown, Ctx>>;
 
 export type SendResponseFn<Ctx = unknown> = <Payload, Result>(
@@ -40,7 +40,7 @@ export type ReceiverLink<Ctx = unknown> = {
 
 export type OperationHandler<
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  O extends OperationDefinition<any, any, any, any>,
+  O extends RpcOperationDefinition<any, any, any, any>,
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   Ctx = any
 > = (payload: ExtractPayload<O>, ctx: Ctx) => MaybePromise<ExtractResult<O>>;

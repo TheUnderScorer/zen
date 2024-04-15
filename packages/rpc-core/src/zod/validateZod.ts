@@ -1,11 +1,11 @@
 import { Schema, ZodError } from 'zod';
-import { OperationDefinitionProperties } from '../schema/OperationDefinition';
+import { RpcOperationDefinitionProperties } from '../schema/RpcOperationDefinition';
 import { RpcZodError } from '../errors/RpcZodError';
 
 export function validateZod<T extends Schema>(
   schema: T,
   value: unknown,
-  operation: OperationDefinitionProperties
+  operation: RpcOperationDefinitionProperties
 ) {
   try {
     return schema.parse(value);

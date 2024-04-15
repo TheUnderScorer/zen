@@ -1,4 +1,4 @@
-import { OperationKind, OperationName } from '../schema/schema.types';
+import { RpcOperationKind, RpcOperationName } from '../schema/schema.types';
 import { Channel } from './communication.types';
 import { generateUUIDv4 } from '../utils/id';
 import { z } from 'zod';
@@ -7,7 +7,7 @@ import { OperationEnvelope } from './OperationEnvelope';
 const operationRequestSchema = z.object({
   id: z.string(),
   name: z.string(),
-  kind: z.nativeEnum(OperationKind),
+  kind: z.nativeEnum(RpcOperationKind),
   payload: z.unknown().optional(),
   timestamp: z.number(),
   channel: z.unknown().optional(),
@@ -27,8 +27,8 @@ export class OperationRequest<Payload = unknown, Ctx = unknown>
   timestamp: number;
 
   constructor(
-    public name: OperationName,
-    public kind: OperationKind,
+    public name: RpcOperationName,
+    public kind: RpcOperationKind,
     public payload: Payload,
     public channel?: Channel,
     ctx?: Ctx

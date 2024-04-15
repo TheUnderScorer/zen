@@ -1,9 +1,9 @@
-import { OperationDefinitionProperties } from '../schema/OperationDefinition';
+import { RpcOperationDefinitionProperties } from '../schema/RpcOperationDefinition';
 
 export class RpcError extends Error {
   constructor(
     message: string,
-    readonly operation: OperationDefinitionProperties
+    readonly operation: RpcOperationDefinitionProperties
   ) {
     super(message);
   }

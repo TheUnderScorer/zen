@@ -1,17 +1,17 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { MaybePromise } from '../shared/promise';
 import { OperationHandler } from './receiver.types';
-import { OperationDefinition } from '../schema/OperationDefinition';
+import { RpcOperationDefinition } from '../schema/RpcOperationDefinition';
 import {
   ExtractPayload,
   ExtractResult,
-  OperationKind,
+  RpcOperationKind,
 } from '../schema/schema.types';
 import { RpcReceiver } from './RpcReceiver';
 import { RpcError } from '../errors/RpcError';
 
 export interface OperationBeforeMiddlewareParams<
-  Operation extends OperationDefinition,
+  Operation extends RpcOperationDefinition,
   Payload,
   Ctx
 > {
@@ -21,7 +21,7 @@ export interface OperationBeforeMiddlewareParams<
 }
 
 export interface OperationAfterMiddlewareParams<
-  Operation extends OperationDefinition,
+  Operation extends RpcOperationDefinition,
   Payload,
   Ctx,
   Result
@@ -30,7 +30,7 @@ export interface OperationAfterMiddlewareParams<
 }
 
 export type OperationBeforeMiddleware<
-  Operation extends OperationDefinition,
+  Operation extends RpcOperationDefinition,
   Ctx,
   Result
 > = (
@@ -46,7 +46,7 @@ export type OperationAfterResult<Result> =
   | { error: null; result: Result };
 
 export type OperationAfterMiddleware<
-  Operation extends OperationDefinition,
+  Operation extends RpcOperationDefinition,
   Ctx
 > = (
   params: OperationAfterMiddlewareParams<
@@ -58,7 +58,7 @@ export type OperationAfterMiddleware<
 ) => MaybePromise<void>;
 
 export class OperationReceiverBuilder<
-  Operation extends OperationDefinition<any>,
+  Operation extends RpcOperationDefinition<any>,
   Ctx
 > {
   private rootHandler?: OperationHandler<Operation, Ctx>;
@@ -233,10 +233,10 @@ export class OperationReceiverBuilder<
     const handler = this.toHandler();
 
     switch (this.operation.kind) {
-      case OperationKind.Command:
+      case RpcOperationKind.Command:
         return this.receiver.handleCommand(this.operation.name, handler);
 
-      case OperationKind.Query:
+      case RpcOperationKind.Query:
         return this.receiver.handleQuery(this.operation.name, handler);
 
       default:

@@ -18,7 +18,7 @@ describe('mergeSchemas', () => {
     expect(fullSchema).toMatchInlineSnapshot(`
       {
         "commands": {
-          "createPost": OperationDefinition {
+          "createPost": RpcOperationDefinition {
             "kind": "command",
             "meta": undefined,
             "name": "createPost",
@@ -149,7 +149,7 @@ describe('mergeSchemas', () => {
               "transform": [Function],
             },
           },
-          "createUser": OperationDefinition {
+          "createUser": RpcOperationDefinition {
             "kind": "command",
             "meta": undefined,
             "name": "createUser",
@@ -280,7 +280,7 @@ describe('mergeSchemas', () => {
               "transform": [Function],
             },
           },
-          "testCommand": OperationDefinition {
+          "testCommand": RpcOperationDefinition {
             "kind": "command",
             "meta": undefined,
             "name": "testCommand",
@@ -289,7 +289,7 @@ describe('mergeSchemas', () => {
           },
         },
         "events": {
-          "postCreated": OperationDefinition {
+          "postCreated": RpcOperationDefinition {
             "kind": "event",
             "meta": undefined,
             "name": "postCreated",
@@ -358,7 +358,7 @@ describe('mergeSchemas', () => {
             },
             "result": undefined,
           },
-          "userCreated": OperationDefinition {
+          "userCreated": RpcOperationDefinition {
             "kind": "event",
             "meta": undefined,
             "name": "userCreated",
@@ -429,7 +429,7 @@ describe('mergeSchemas', () => {
           },
         },
         "queries": {
-          "getPost": OperationDefinition {
+          "getPost": RpcOperationDefinition {
             "kind": "query",
             "meta": undefined,
             "name": "getPost",
@@ -560,7 +560,7 @@ describe('mergeSchemas', () => {
               "transform": [Function],
             },
           },
-          "getUser": OperationDefinition {
+          "getUser": RpcOperationDefinition {
             "kind": "query",
             "meta": undefined,
             "name": "getUser",

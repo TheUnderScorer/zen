@@ -2,7 +2,7 @@ import { mergeSchemas } from '../schema/schemaHelpers';
 import { RpcReceiver } from './RpcReceiver';
 import { RpcClient } from '../client/RpcClient';
 import { OperationBeforeMiddleware } from './OperationReceiverBuilder';
-import { OperationDefinition } from '../schema/OperationDefinition';
+import { RpcOperationDefinition } from '../schema/RpcOperationDefinition';
 import { RpcZodError } from '../errors/RpcZodError';
 import { wait } from '../utils/wait';
 import {
@@ -284,7 +284,7 @@ describe('RpcReceiver', () => {
       const middleware =
         <
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          Operation extends OperationDefinition<any, any, any, any>,
+          Operation extends RpcOperationDefinition<any, any, any, any>,
           Ctx
         >(): OperationBeforeMiddleware<
           Operation,

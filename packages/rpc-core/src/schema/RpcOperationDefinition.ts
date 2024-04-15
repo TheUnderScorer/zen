@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { OperationKind, OperationName } from './schema.types';
+import { RpcOperationKind, RpcOperationName } from './schema.types';
 import { ZodSchema } from 'zod';
 
-export interface OperationDefinitionProperties<
-  Kind extends OperationKind = OperationKind,
-  Name extends OperationName = OperationName,
+export interface RpcOperationDefinitionProperties<
+  Kind extends RpcOperationKind = RpcOperationKind,
+  Name extends RpcOperationName = RpcOperationName,
   Payload = undefined,
   Result = any,
   Meta extends Record<string, any> = Record<string, any>
@@ -16,13 +16,14 @@ export interface OperationDefinitionProperties<
   meta: Meta;
 }
 
-export class OperationDefinition<
-  Kind extends OperationKind = OperationKind,
-  Name extends OperationName = OperationName,
+export class RpcOperationDefinition<
+  Kind extends RpcOperationKind = RpcOperationKind,
+  Name extends RpcOperationName = RpcOperationName,
   Payload = undefined,
   Result = any,
   Meta extends Record<string, any> = Record<string, any>
-> implements OperationDefinitionProperties<Kind, Name, Payload, Result, Meta>
+> implements
+    RpcOperationDefinitionProperties<Kind, Name, Payload, Result, Meta>
 {
   payload!: Payload;
 
@@ -35,23 +36,27 @@ export class OperationDefinition<
   constructor(public kind: Kind) {}
 
   static query() {
-    return new OperationDefinition<OperationKind.Query>(OperationKind.Query);
+    return new RpcOperationDefinition<RpcOperationKind.Query>(
+      RpcOperationKind.Query
+    );
   }
 
   static command() {
-    return new OperationDefinition<OperationKind.Command>(
-      OperationKind.Command
+    return new RpcOperationDefinition<RpcOperationKind.Command>(
+      RpcOperationKind.Command
     );
   }
 
   static event() {
-    return new OperationDefinition<OperationKind.Event>(OperationKind.Event);
+    return new RpcOperationDefinition<RpcOperationKind.Event>(
+      RpcOperationKind.Event
+    );
   }
 
-  withPayload<P>(): OperationDefinition<Kind, Name, P, Result, Meta>;
+  withPayload<P>(): RpcOperationDefinition<Kind, Name, P, Result, Meta>;
   withPayload<P extends ZodSchema>(
     zod: P
-  ): OperationDefinition<Kind, Name, P, Result, Meta>;
+  ): RpcOperationDefinition<Kind, Name, P, Result, Meta>;
 
   /**
    * Defines operation payload.
@@ -72,7 +77,13 @@ export class OperationDefinition<
       });
     }
 
-    return this as unknown as OperationDefinition<Kind, Name, P, Result, Meta>;
+    return this as unknown as RpcOperationDefinition<
+      Kind,
+      Name,
+      P,
+      Result,
+      Meta
+    >;
   }
 
   /**
@@ -80,12 +91,12 @@ export class OperationDefinition<
    *
    * Note: it is not required to call it manually. Name will be automatically set by `defineRpcSchema` function.
    * */
-  withName<N extends OperationName>(name: N) {
+  withName<N extends RpcOperationName>(name: N) {
     Object.assign(this, {
       name,
     });
 
-    return this as unknown as OperationDefinition<
+    return this as unknown as RpcOperationDefinition<
       Kind,
       N,
       Payload,
@@ -94,10 +105,10 @@ export class OperationDefinition<
     >;
   }
 
-  withResult<R>(): OperationDefinition<Kind, Name, Payload, R, Meta>;
+  withResult<R>(): RpcOperationDefinition<Kind, Name, Payload, R, Meta>;
   withResult<R>(
     zod: ZodSchema<R>
-  ): OperationDefinition<Kind, Name, Payload, R, Meta>;
+  ): RpcOperationDefinition<Kind, Name, Payload, R, Meta>;
 
   /**
    * Defines operation result.
@@ -112,7 +123,7 @@ export class OperationDefinition<
    * definition.withResult<{ id: number }>()
    * */
   withResult<R extends ZodSchema>(zodSchema?: R) {
-    if (this.kind === OperationKind.Event) {
+    if (this.kind === RpcOperationKind.Event) {
       throw new TypeError('Events cannot have a result');
     }
 
@@ -122,7 +133,13 @@ export class OperationDefinition<
       });
     }
 
-    return this as unknown as OperationDefinition<Kind, Name, Payload, R, Meta>;
+    return this as unknown as RpcOperationDefinition<
+      Kind,
+      Name,
+      Payload,
+      R,
+      Meta
+    >;
   }
 
   /**
@@ -155,7 +172,7 @@ export class OperationDefinition<
       },
     });
 
-    return this as unknown as OperationDefinition<
+    return this as unknown as RpcOperationDefinition<
       Kind,
       Name,
       Payload,
@@ -171,12 +188,12 @@ export class OperationDefinition<
       payload: this.payload as Payload,
       result: this.result as Result,
       meta: this.meta as Meta,
-    } as OperationDefinitionProperties<Kind, Name, Payload, Result, Meta>;
+    } as RpcOperationDefinitionProperties<Kind, Name, Payload, Result, Meta>;
   }
 
   clone() {
     return Object.assign(
-      new OperationDefinition<Kind, Name, Payload, Result, Meta>(this.kind),
+      new RpcOperationDefinition<Kind, Name, Payload, Result, Meta>(this.kind),
       this
     );
   }
