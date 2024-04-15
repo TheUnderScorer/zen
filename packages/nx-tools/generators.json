@@ -1,6 +1,6 @@
 {
   "generators": {
-    "library": {
+    "lib": {
       "factory": "./src/generators/library/generator",
       "schema": "./src/generators/library/schema.json",
       "description": "library generator"
