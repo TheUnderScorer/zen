@@ -24,6 +24,9 @@
       "@theunderscorer/chain": ["packages/chain/src/index.ts"],
       "@theunderscorer/promise-utils": ["packages/promise-utils/src/index.ts"],
       "@theunderscorer/rpc-core": ["packages/rpc-core/src/index.ts"],
+      "@theunderscorer/rpc-in-memory-link": [
+        "packages/rpc-in-memory-link/src/index.ts"
+      ],
       "@theunderscorer/rpc-test-utils": [
         "packages/rpc-test-utils/src/index.ts"
       ],
