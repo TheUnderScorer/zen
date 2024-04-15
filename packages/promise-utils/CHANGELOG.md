@@ -1,3 +1,9 @@
+## [1.1.0](https://github.com/TheUnderScorer/zen/compare/promise-utils-v1.0.0...promise-utils-v1.1.0) (2024-04-15)
+
+### Features
+
+- add rpc-core ([67a61ae](https://github.com/TheUnderScorer/zen/commit/67a61ae1022a806075061578a325083412388df2))
+
 # 1.0.0 (2024-04-14)
 
 ### Features
