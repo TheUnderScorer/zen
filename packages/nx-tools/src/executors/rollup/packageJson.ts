@@ -52,6 +52,9 @@ export async function updatePackageJson(
     ...projectPackageJson,
   };
 
+  let esmOutput: string | undefined;
+  let typesOutput: string | undefined;
+
   rollupOptions.forEach((option) => {
     const inputs = Array.isArray(option.input) ? option.input : [option.input];
     const outputs = Array.isArray(option.output)
@@ -75,10 +78,15 @@ export async function updatePackageJson(
 
             const format = resolveExportsFormat(output.format, output.file);
 
-            if (
-              format === 'require' ||
-              (options.onlyEsm && format === 'import')
-            ) {
+            if (format === 'import') {
+              esmOutput = filePath;
+            }
+
+            if (format === 'types') {
+              typesOutput = filePath;
+            }
+
+            if (format === 'require') {
               result.main = filePath;
             }
 
@@ -109,6 +117,14 @@ export async function updatePackageJson(
 
   if (options.onlyEsm) {
     result.type = 'module';
+
+    if (esmOutput) {
+      result.exports = esmOutput;
+    }
+
+    if (typesOutput) {
+      result.types = typesOutput;
+    }
   }
 
   const packageJsons = [rootPackageJson, projectPackageJson];

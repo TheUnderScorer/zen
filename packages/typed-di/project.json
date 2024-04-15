@@ -4,6 +4,9 @@
   "sourceRoot": "packages/typed-di/src",
   "projectType": "library",
   "tags": [],
+  "implicitDependencies": [
+    "nx-tools"
+  ],
   "targets": {
     "build": {
       "executor": "nx-tools:rollup",

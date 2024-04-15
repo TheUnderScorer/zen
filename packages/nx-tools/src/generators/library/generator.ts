@@ -26,6 +26,7 @@ export default async function (tree: Tree, schema: LibraryGeneratorOptions) {
     name: schema.name,
     root: libraryRoot,
     sourceRoot: path.join(libraryRoot, 'src'),
+    implicitDependencies: ['nx-tools'],
     targets: schema.private
       ? {}
       : {
