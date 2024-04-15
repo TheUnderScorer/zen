@@ -1,0 +1,22 @@
+{
+  "name": "rpc-core",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "build": {
+      "executor": "nx-tools:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/rpc-core",
+        "inputFiles": ["index.ts"]
+      }
+    },
+    "semantic-release": {
+      "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+      "options": {
+        "buildTarget": "rpc-core:build",
+        "tagFormat": "rpc-core-v${VERSION}",
+        "outputPath": "dist/packages/rpc-core"
+      }
+    }
+  }
+}
