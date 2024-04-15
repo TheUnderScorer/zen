@@ -21,6 +21,7 @@ export default async function (tree: Tree, schema: LibraryGeneratorOptions) {
   addProjectConfiguration(tree, schema.name, {
     name: schema.name,
     root: libraryRoot,
+    sourceRoot: path.join(libraryRoot, 'src'),
     targets: schema.private ? {} : {
       build: {
         executor: 'nx-tools:rollup',
