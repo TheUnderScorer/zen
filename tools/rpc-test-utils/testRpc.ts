@@ -1,7 +1,7 @@
 import { z } from 'zod';
 import { createTestLink } from './testLink';
 import { testPostSchema, testUserSchema, User } from './testSchemas';
-import { createRpc, mergeSchemas, RpcReceiver } from '@theunderscorer/rpc-core';
+import { createRpc, mergeSchemas, RpcReceiver } from 'packages/rpc-core/src';
 
 export const testSchema = mergeSchemas(testUserSchema, testPostSchema);
 

@@ -27,12 +27,10 @@
       "@theunderscorer/rpc-in-memory-link": [
         "packages/rpc-in-memory-link/src/index.ts"
       ],
-      "@theunderscorer/rpc-test-utils": [
-        "packages/rpc-test-utils/src/index.ts"
-      ],
       "@theunderscorer/typed-di": ["packages/typed-di/src/index.ts"],
       "@theunderscorer/wait": ["packages/wait/src/index.ts"],
-      "nx-tools": ["packages/nx-tools/src/index.ts"]
+      "nx-tools": ["packages/nx-tools/src/index.ts"],
+      "rpc-test-utils": ["tools/rpc-test-utils/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

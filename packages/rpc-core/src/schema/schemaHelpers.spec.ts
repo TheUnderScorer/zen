@@ -1,5 +1,5 @@
 import { defineRpcSchema, mergeSchemas, operation } from './schemaHelpers';
-import { testPostSchema, testUserSchema } from '@theunderscorer/rpc-test-utils';
+import { testPostSchema, testUserSchema } from 'rpc-test-utils';
 
 describe('mergeSchemas', () => {
   it('should merge schemas multiple times', () => {

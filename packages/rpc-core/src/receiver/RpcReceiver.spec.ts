@@ -5,11 +5,7 @@ import { OperationBeforeMiddleware } from './OperationReceiverBuilder';
 import { RpcOperationDefinition } from '../schema/RpcOperationDefinition';
 import { RpcZodError } from '../errors/RpcZodError';
 import { wait } from '../utils/wait';
-import {
-  createTestLink,
-  testPostSchema,
-  testUserSchema,
-} from '@theunderscorer/rpc-test-utils';
+import { createTestLink, testPostSchema, testUserSchema } from 'rpc-test-utils';
 
 const schema = mergeSchemas(testUserSchema, testPostSchema);
 

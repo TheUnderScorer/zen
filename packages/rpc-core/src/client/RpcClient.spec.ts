@@ -3,11 +3,7 @@ import { OperationResponse } from '../shared/OperationResponse';
 import { RpcReceiver } from '../receiver/RpcReceiver';
 import { mergeSchemas } from '../schema/schemaHelpers';
 import { RpcZodError } from '../errors/RpcZodError';
-import {
-  createTestLink,
-  testPostSchema,
-  testUserSchema,
-} from '@theunderscorer/rpc-test-utils';
+import { createTestLink, testPostSchema, testUserSchema } from 'rpc-test-utils';
 
 const schema = mergeSchemas(testUserSchema, testPostSchema);
 

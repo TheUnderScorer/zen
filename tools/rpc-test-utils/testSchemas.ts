@@ -1,9 +1,4 @@
-import {
-  command,
-  query,
-  event,
-  defineRpcSchema,
-} from '@theunderscorer/rpc-core';
+import { command, query, event, defineRpcSchema } from 'packages/rpc-core/src';
 import { z } from 'zod';
 
 export const User = z.object({

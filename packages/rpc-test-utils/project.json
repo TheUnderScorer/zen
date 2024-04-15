@@ -1,6 +1,0 @@
-{
-  "name": "rpc-test-utils",
-  "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "// targets": "to see all targets run: nx show project rpc-test-utils --web",
-  "targets": {}
-}

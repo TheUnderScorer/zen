@@ -6,7 +6,7 @@ import {
   OperationRequest,
   OperationResponse,
   ReceiverLink,
-} from '@theunderscorer/rpc-core';
+} from 'packages/rpc-core/src';
 
 export function createTestLink() {
   const clientLink = {
