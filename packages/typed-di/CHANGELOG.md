@@ -1,3 +1,9 @@
+## [1.2.0](https://github.com/TheUnderScorer/zen/compare/typed-di-v1.1.1...typed-di-v1.2.0) (2024-04-15)
+
+### Features
+
+- add rpc-core ([67a61ae](https://github.com/TheUnderScorer/zen/commit/67a61ae1022a806075061578a325083412388df2))
+
 ## [1.1.1](https://github.com/TheUnderScorer/zen/compare/typed-di-v1.1.0...typed-di-v1.1.1) (2024-04-14)
 
 ### Bug Fixes
