@@ -1,7 +1,7 @@
 import { ZodError } from 'zod';
 import { OperationDefinitionProperties } from '../schema/OperationDefinition';
 
-export class MusubiZodError extends ZodError {
+export class RpcZodError extends ZodError {
   constructor(
     errors: ZodError['errors'],
     readonly operation: OperationDefinitionProperties

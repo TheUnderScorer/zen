@@ -1,6 +1,6 @@
 import { Schema, ZodError } from 'zod';
 import { OperationDefinitionProperties } from '../schema/OperationDefinition';
-import { MusubiZodError } from '../errors/MusubiZodError';
+import { RpcZodError } from '../errors/RpcZodError';
 
 export function validateZod<T extends Schema>(
   schema: T,
@@ -11,7 +11,7 @@ export function validateZod<T extends Schema>(
     return schema.parse(value);
   } catch (error) {
     if (error instanceof ZodError) {
-      throw new MusubiZodError(error.errors, operation);
+      throw new RpcZodError(error.errors, operation);
     }
 
     throw error;

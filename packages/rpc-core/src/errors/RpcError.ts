@@ -1,6 +1,6 @@
 import { OperationDefinitionProperties } from '../schema/OperationDefinition';
 
-export class MusubiError extends Error {
+export class RpcError extends Error {
   constructor(
     message: string,
     readonly operation: OperationDefinitionProperties

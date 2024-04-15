@@ -1,17 +1,20 @@
-import { MusubiClient } from './MusubiClient';
+import { RpcClient } from './RpcClient';
 import { OperationResponse } from '../shared/OperationResponse';
-import { MusubiReceiver } from '../receiver/MusubiReceiver';
+import { RpcReceiver } from '../receiver/RpcReceiver';
 import { mergeSchemas } from '../schema/schemaHelpers';
-import { testPostSchema, testUserSchema } from 'tools/test/testSchemas';
-import { createTestLink } from 'tools/test/testLink';
-import { MusubiZodError } from '../errors/MusubiZodError';
+import { RpcZodError } from '../errors/RpcZodError';
+import {
+  createTestLink,
+  testPostSchema,
+  testUserSchema,
+} from '@theunderscorer/rpc-test-utils';
 
 const schema = mergeSchemas(testUserSchema, testPostSchema);
 
 let receiverLink: ReturnType<typeof createTestLink>['receiverLink'];
 let clientLink: ReturnType<typeof createTestLink>['clientLink'];
 
-describe('MusubiClient', () => {
+describe('RpcClient', () => {
   beforeEach(() => {
     jest.clearAllMocks();
 
@@ -22,19 +25,19 @@ describe('MusubiClient', () => {
   });
 
   it('should validate payload', async () => {
-    const receiver = new MusubiReceiver(schema, [receiverLink]);
+    const receiver = new RpcReceiver(schema, [receiverLink]);
 
     receiver.handleCommand('createUser', async (payload) => ({
       name: payload.name,
       id: '1',
     }));
 
-    const client = new MusubiClient(schema, [clientLink]);
+    const client = new RpcClient(schema, [clientLink]);
 
     await expect(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       client.command('createUser', { invalid: 'test' } as any)
-    ).rejects.toThrow(MusubiZodError);
+    ).rejects.toThrow(RpcZodError);
   });
 
   it('should send channel in request', async () => {
@@ -42,14 +45,14 @@ describe('MusubiClient', () => {
       test: true,
     };
 
-    const receiver = new MusubiReceiver(schema, [receiverLink]);
+    const receiver = new RpcReceiver(schema, [receiverLink]);
 
     receiver.handleCommand('createUser', async (payload) => ({
       name: payload.name,
       id: '1',
     }));
 
-    const client = new MusubiClient(schema, [
+    const client = new RpcClient(schema, [
       {
         sendRequest: async (request, next) => {
           expect(request.channel).toBe(channel);
@@ -69,14 +72,14 @@ describe('MusubiClient', () => {
   });
 
   it('should support multiple links', async () => {
-    const receiver = new MusubiReceiver(schema, [receiverLink]);
+    const receiver = new RpcReceiver(schema, [receiverLink]);
 
     receiver.handleCommand('createUser', async (payload) => ({
       name: payload.name,
       id: '1',
     }));
 
-    const client = new MusubiClient(schema, [
+    const client = new RpcClient(schema, [
       {
         sendRequest: async (request, next) => {
           const response = await next(request);
@@ -96,13 +99,13 @@ describe('MusubiClient', () => {
 
   it('should support multiple links on error', async () => {
     const error = new Error('test');
-    const receiver = new MusubiReceiver(schema, [receiverLink]);
+    const receiver = new RpcReceiver(schema, [receiverLink]);
 
     receiver.handleCommand('createUser', async () => {
       throw error;
     });
 
-    const client = new MusubiClient(schema, [
+    const client = new RpcClient(schema, [
       {
         sendRequest: async (request, next) => {
           const response = await next(request);
@@ -130,9 +133,9 @@ describe('MusubiClient', () => {
 
     const onTeardown = jest.fn();
 
-    const receiver = new MusubiReceiver(schema, [receiverLink]);
+    const receiver = new RpcReceiver(schema, [receiverLink]);
 
-    const client = new MusubiClient(schema, [
+    const client = new RpcClient(schema, [
       {
         subscribeToEvent: (request, next) => {
           const obs = next(request);

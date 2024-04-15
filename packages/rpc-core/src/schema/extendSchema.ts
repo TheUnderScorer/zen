@@ -25,9 +25,9 @@ type ExtendedSchema<
  *
  * @example
  * ```ts
- * import { defineSchema, extendSchema, command, event, query } from '@musubi/core';
+ * import { defineRpcSchema, extendSchema, command, event, query } from '@theunderscorer/rpc-core';
  *
- * const baseSchema = defineSchema({
+ * const baseSchema = defineRpcSchema({
  *   commands: {
  *     replaceContent: command()
  *       .withPayload(replaceContentSchema)

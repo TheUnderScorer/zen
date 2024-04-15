@@ -1,6 +1,7 @@
 {
   "name": "rpc-core",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/rpc-core/src",
   "targets": {
     "build": {
       "executor": "nx-tools:rollup",

@@ -7,8 +7,8 @@ import {
   ExtractResult,
   OperationKind,
 } from '../schema/schema.types';
-import { MusubiReceiver } from './MusubiReceiver';
-import { MusubiError } from '../errors/MusubiError';
+import { RpcReceiver } from './RpcReceiver';
+import { RpcError } from '../errors/RpcError';
 
 export interface OperationBeforeMiddlewareParams<
   Operation extends OperationDefinition,
@@ -73,7 +73,7 @@ export class OperationReceiverBuilder<
     [];
 
   constructor(
-    private readonly receiver: MusubiReceiver<any, Ctx>,
+    private readonly receiver: RpcReceiver<any, Ctx>,
     private readonly operation: Operation
   ) {}
 
@@ -147,7 +147,7 @@ export class OperationReceiverBuilder<
    * */
   toHandler(): OperationHandler<Operation, Ctx> {
     if (!this.rootHandler) {
-      throw new MusubiError(
+      throw new RpcError(
         'Root handler is missing. Perhaps you forgot to call .withHandler() ?',
         this.operation
       );
@@ -240,7 +240,7 @@ export class OperationReceiverBuilder<
         return this.receiver.handleQuery(this.operation.name, handler);
 
       default:
-        throw new MusubiError(
+        throw new RpcError(
           `Unknown operation kind: ${this.operation.kind}`,
           this.operation
         );

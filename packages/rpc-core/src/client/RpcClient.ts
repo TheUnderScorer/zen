@@ -22,7 +22,7 @@ import { Observable } from '../observable/Observable';
 import { Chain } from '@theunderscorer/chain';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class MusubiClient<S extends OperationsSchema, Ctx = any> {
+export class RpcClient<S extends OperationsSchema, Ctx = any> {
   private readonly links: ClientLink<Ctx>[];
 
   constructor(private readonly schema: S, links: LinkParam<ClientLink<Ctx>>[]) {
@@ -30,7 +30,7 @@ export class MusubiClient<S extends OperationsSchema, Ctx = any> {
   }
 
   cloneWithLinks(modifier: (links: ClientLink<Ctx>[]) => ClientLink<Ctx>[]) {
-    return new MusubiClient(this.schema, modifier(this.links));
+    return new RpcClient(this.schema, modifier(this.links));
   }
 
   /**

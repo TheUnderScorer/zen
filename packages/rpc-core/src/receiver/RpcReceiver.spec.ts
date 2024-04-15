@@ -1,16 +1,19 @@
 import { mergeSchemas } from '../schema/schemaHelpers';
-import { testPostSchema, testUserSchema } from 'tools/test/testSchemas';
-import { createTestLink } from 'tools/test/testLink';
-import { MusubiReceiver } from './MusubiReceiver';
-import { MusubiClient } from '../client/MusubiClient';
+import { RpcReceiver } from './RpcReceiver';
+import { RpcClient } from '../client/RpcClient';
 import { OperationBeforeMiddleware } from './OperationReceiverBuilder';
 import { OperationDefinition } from '../schema/OperationDefinition';
-import { MusubiZodError } from '../errors/MusubiZodError';
+import { RpcZodError } from '../errors/RpcZodError';
 import { wait } from '../utils/wait';
+import {
+  createTestLink,
+  testPostSchema,
+  testUserSchema,
+} from '@theunderscorer/rpc-test-utils';
 
 const schema = mergeSchemas(testUserSchema, testPostSchema);
 
-describe('MusubiReceiver', () => {
+describe('RpcReceiver', () => {
   let receiverLink: ReturnType<typeof createTestLink>['receiverLink'];
   let clientLink: ReturnType<typeof createTestLink>['clientLink'];
 
@@ -24,7 +27,7 @@ describe('MusubiReceiver', () => {
   });
 
   it('should validate result', async () => {
-    const receiver = new MusubiReceiver(schema, [receiverLink]);
+    const receiver = new RpcReceiver(schema, [receiverLink]);
 
     receiver.handleCommand(
       'createUser',
@@ -36,11 +39,11 @@ describe('MusubiReceiver', () => {
         } as any)
     );
 
-    const client = new MusubiClient(schema, [clientLink]);
+    const client = new RpcClient(schema, [clientLink]);
 
     await expect(
       client.command('createUser', { name: 'test' })
-    ).rejects.toThrow(MusubiZodError);
+    ).rejects.toThrow(RpcZodError);
   });
 
   it('should receive channel from client', async () => {
@@ -48,7 +51,7 @@ describe('MusubiReceiver', () => {
       test: true,
     };
 
-    const receiver = new MusubiReceiver(schema, [
+    const receiver = new RpcReceiver(schema, [
       {
         receiveRequest: (name, next) => {
           const observable = next(name);
@@ -68,7 +71,7 @@ describe('MusubiReceiver', () => {
       id: '1',
     }));
 
-    const client = new MusubiClient(schema, [clientLink]);
+    const client = new RpcClient(schema, [clientLink]);
 
     await client.command('createUser', { name: 'test' }, channel);
   });
@@ -76,7 +79,7 @@ describe('MusubiReceiver', () => {
   it('should support multiple links for sending response', async () => {
     const onSend = jest.fn();
 
-    const receiver = new MusubiReceiver(schema, [
+    const receiver = new RpcReceiver(schema, [
       {
         sendResponse: async (response, next) => {
           onSend(response.unwrap());
@@ -92,7 +95,7 @@ describe('MusubiReceiver', () => {
       id: '1',
     }));
 
-    const client = new MusubiClient(schema, [clientLink]);
+    const client = new RpcClient(schema, [clientLink]);
 
     const result = await client.command('createUser', { name: 'test' });
 
@@ -103,7 +106,7 @@ describe('MusubiReceiver', () => {
   it('should support multiple async links', async () => {
     const onUnsub = jest.fn();
 
-    const receiver = new MusubiReceiver(schema, [
+    const receiver = new RpcReceiver(schema, [
       {
         receiveRequest: (name, next) => {
           const obs = next(name);
@@ -140,7 +143,7 @@ describe('MusubiReceiver', () => {
       };
     });
 
-    const client = new MusubiClient(schema, [clientLink]);
+    const client = new RpcClient(schema, [clientLink]);
 
     const result = await client.command('createUser', { name: 'test' });
 
@@ -153,9 +156,9 @@ describe('MusubiReceiver', () => {
 
   describe('Operation Builder', () => {
     it('should pass result to middleware after', async () => {
-      const client = new MusubiClient(schema, [clientLink]);
+      const client = new RpcClient(schema, [clientLink]);
 
-      const receiver = new MusubiReceiver<typeof schema, { fromLink: true }>(
+      const receiver = new RpcReceiver<typeof schema, { fromLink: true }>(
         schema,
         [receiverLink]
       );
@@ -187,9 +190,9 @@ describe('MusubiReceiver', () => {
     });
 
     it('should pass error from middleware before', async () => {
-      const client = new MusubiClient(schema, [clientLink]);
+      const client = new RpcClient(schema, [clientLink]);
 
-      const receiver = new MusubiReceiver<typeof schema, { fromLink: true }>(
+      const receiver = new RpcReceiver<typeof schema, { fromLink: true }>(
         schema,
         [receiverLink]
       );
@@ -227,9 +230,9 @@ describe('MusubiReceiver', () => {
     });
 
     it('should pass error to middleware after if handler throws', async () => {
-      const client = new MusubiClient(schema, [clientLink]);
+      const client = new RpcClient(schema, [clientLink]);
 
-      const receiver = new MusubiReceiver<typeof schema, { fromLink: true }>(
+      const receiver = new RpcReceiver<typeof schema, { fromLink: true }>(
         schema,
         [receiverLink]
       );
@@ -255,9 +258,9 @@ describe('MusubiReceiver', () => {
     });
 
     it('should support altering context for middleware before', async () => {
-      const client = new MusubiClient(schema, [clientLink]);
+      const client = new RpcClient(schema, [clientLink]);
 
-      const receiver = new MusubiReceiver<typeof schema, { fromLink: true }>(
+      const receiver = new RpcReceiver<typeof schema, { fromLink: true }>(
         schema,
         [
           {

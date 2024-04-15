@@ -22,7 +22,7 @@ import { OperationDefinition } from '../schema/OperationDefinition';
 import { Chain } from '@theunderscorer/chain';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export class MusubiReceiver<S extends OperationsSchema, Ctx = any> {
+export class RpcReceiver<S extends OperationsSchema, Ctx = any> {
   private readonly links: ReceiverLink<Ctx>[];
 
   constructor(
@@ -35,7 +35,7 @@ export class MusubiReceiver<S extends OperationsSchema, Ctx = any> {
   cloneWithLinks(
     modifier: (links: ReceiverLink<Ctx>[]) => ReceiverLink<Ctx>[]
   ) {
-    return new MusubiReceiver(this.schema, modifier(this.links));
+    return new RpcReceiver(this.schema, modifier(this.links));
   }
 
   handleQuery<Name extends keyof S['queries']>(
@@ -110,7 +110,7 @@ export class MusubiReceiver<S extends OperationsSchema, Ctx = any> {
     operation: Operation
   ): OperationReceiverBuilder<Operation, Ctx & OpCtx> {
     return new OperationReceiverBuilder<Operation, Ctx & OpCtx>(
-      this as MusubiReceiver<S, Ctx & OpCtx>,
+      this as RpcReceiver<S, Ctx & OpCtx>,
       operation
     );
   }

@@ -19,7 +19,7 @@ export function getOperationFromSchema<
   return operation;
 }
 
-export function defineSchema<S extends OperationsSchema>(schema: S) {
+export function defineRpcSchema<S extends OperationsSchema>(schema: S) {
   const addName = (key: keyof Pick<S, 'queries' | 'events' | 'commands'>) =>
     mapObject(schema[key], (value, key) => {
       return value.withName(key.toString());

@@ -1,9 +1,9 @@
-import { defineSchema } from '../schema/schemaHelpers';
+import { defineRpcSchema } from '../schema/schemaHelpers';
 import { createLinks } from './link';
 
 describe('createLinks', () => {
   it('should support both types of links', () => {
-    const schema = defineSchema({
+    const schema = defineRpcSchema({
       commands: {},
       queries: {},
       events: {},

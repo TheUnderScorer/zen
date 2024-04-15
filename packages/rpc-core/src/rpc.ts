@@ -1,11 +1,11 @@
 import { OperationsSchema } from './schema/schema.types';
 import { ClientLink } from './client/client.types';
-import { MusubiClient } from './client/MusubiClient';
-import { MusubiReceiver } from './receiver/MusubiReceiver';
+import { RpcClient } from './client/RpcClient';
+import { RpcReceiver } from './receiver/RpcReceiver';
 import { ReceiverLink } from './receiver/receiver.types';
 import { LinkParam } from './shared/link.types';
 
-export interface MusubiParams<
+export interface RpcParams<
   S extends OperationsSchema,
   ClientContext = unknown,
   ReceiverContext = unknown
@@ -15,16 +15,16 @@ export interface MusubiParams<
   receiverLinks: LinkParam<ReceiverLink<ReceiverContext>>[];
 }
 
-export interface Musubi<
+export interface Rpc<
   S extends OperationsSchema = OperationsSchema,
   ClientContext = unknown,
   ReceiverContext = unknown
 > {
-  client: MusubiClient<S, ClientContext>;
-  receiver: MusubiReceiver<S, ReceiverContext>;
+  client: RpcClient<S, ClientContext>;
+  receiver: RpcReceiver<S, ReceiverContext>;
 }
 
-export function createMusubi<
+export function createRpc<
   S extends OperationsSchema,
   ClientContext = unknown,
   ReceiverContext = unknown
@@ -32,9 +32,9 @@ export function createMusubi<
   clientLinks,
   receiverLinks,
   schema,
-}: MusubiParams<S, ClientContext, ReceiverContext>) {
+}: RpcParams<S, ClientContext, ReceiverContext>) {
   return {
-    client: new MusubiClient(schema, clientLinks),
-    receiver: new MusubiReceiver(schema, receiverLinks),
-  } satisfies Musubi<S, ClientContext, ReceiverContext>;
+    client: new RpcClient(schema, clientLinks),
+    receiver: new RpcReceiver(schema, receiverLinks),
+  } satisfies Rpc<S, ClientContext, ReceiverContext>;
 }

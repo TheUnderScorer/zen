@@ -1,11 +1,11 @@
-import { defineSchema, mergeSchemas, operation } from './schemaHelpers';
-import { testPostSchema, testUserSchema } from 'tools/test/testSchemas';
+import { defineRpcSchema, mergeSchemas, operation } from './schemaHelpers';
+import { testPostSchema, testUserSchema } from '@theunderscorer/rpc-test-utils';
 
 describe('mergeSchemas', () => {
   it('should merge schemas multiple times', () => {
     const firstMergedSchema = mergeSchemas(testUserSchema, testPostSchema);
 
-    const schema = defineSchema({
+    const schema = defineRpcSchema({
       events: {},
       queries: {},
       commands: {
@@ -20,6 +20,7 @@ describe('mergeSchemas', () => {
         "commands": {
           "createPost": OperationDefinition {
             "kind": "command",
+            "meta": undefined,
             "name": "createPost",
             "payload": ZodObject {
               "_cached": null,
@@ -150,6 +151,7 @@ describe('mergeSchemas', () => {
           },
           "createUser": OperationDefinition {
             "kind": "command",
+            "meta": undefined,
             "name": "createUser",
             "payload": ZodObject {
               "_cached": null,
@@ -280,12 +282,16 @@ describe('mergeSchemas', () => {
           },
           "testCommand": OperationDefinition {
             "kind": "command",
+            "meta": undefined,
             "name": "testCommand",
+            "payload": undefined,
+            "result": undefined,
           },
         },
         "events": {
           "postCreated": OperationDefinition {
             "kind": "event",
+            "meta": undefined,
             "name": "postCreated",
             "payload": ZodObject {
               "_cached": null,
@@ -350,9 +356,11 @@ describe('mergeSchemas', () => {
               "superRefine": [Function],
               "transform": [Function],
             },
+            "result": undefined,
           },
           "userCreated": OperationDefinition {
             "kind": "event",
+            "meta": undefined,
             "name": "userCreated",
             "payload": ZodObject {
               "_cached": null,
@@ -417,11 +425,13 @@ describe('mergeSchemas', () => {
               "superRefine": [Function],
               "transform": [Function],
             },
+            "result": undefined,
           },
         },
         "queries": {
           "getPost": OperationDefinition {
             "kind": "query",
+            "meta": undefined,
             "name": "getPost",
             "payload": ZodObject {
               "_cached": null,
@@ -552,6 +562,7 @@ describe('mergeSchemas', () => {
           },
           "getUser": OperationDefinition {
             "kind": "query",
+            "meta": undefined,
             "name": "getUser",
             "payload": ZodObject {
               "_cached": null,

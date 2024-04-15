@@ -78,7 +78,7 @@ export class OperationDefinition<
   /**
    * Sets operation name.
    *
-   * Note: it is not required to call it manually. Name will be automatically set by `defineSchema` function.
+   * Note: it is not required to call it manually. Name will be automatically set by `defineRpcSchema` function.
    * */
   withName<N extends OperationName>(name: N) {
     Object.assign(this, {
@@ -131,9 +131,9 @@ export class OperationDefinition<
    * @example
    *
    * ```ts
-   * import { defineSchema, command, getOperationFromSchema } from '@musubi/core'
+   * import { defineRpcSchema, command, getOperationFromSchema } from '@theunderscorer/rpc-core'
    *
-   * const schema = defineSchema({
+   * const schema = defineRpcSchema({
    *   commands: {
    *     createPost: command().withMeta({ auth: true })
    *   }
