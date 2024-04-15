@@ -1,3 +1,9 @@
+## [1.2.1](https://github.com/TheUnderScorer/zen/compare/typed-di-v1.2.0...typed-di-v1.2.1) (2024-04-15)
+
+### Bug Fixes
+
+- make typed-di esm only ([111e46d](https://github.com/TheUnderScorer/zen/commit/111e46de1745f40c02ae1994369a51592825511d))
+
 ## [1.2.0](https://github.com/TheUnderScorer/zen/compare/typed-di-v1.1.1...typed-di-v1.2.0) (2024-04-15)
 
 ### Features
