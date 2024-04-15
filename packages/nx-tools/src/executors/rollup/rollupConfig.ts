@@ -69,7 +69,7 @@ export function buildRollupConfig(
       };
 
       return [
-        {
+        !options.onlyEsm && {
           ...input,
           output: {
             ...commonOutput,
@@ -99,7 +99,7 @@ export function buildRollupConfig(
             format: 'es',
           },
         },
-      ] as RollupOptions[];
+      ].filter(Boolean) as RollupOptions[];
     }),
   ];
 }

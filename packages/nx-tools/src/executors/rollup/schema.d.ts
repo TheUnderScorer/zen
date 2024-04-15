@@ -4,4 +4,5 @@ export interface RollupExecutorSchema extends RollupExecutorOptions {
   name: string;
   additionalPeerDeps?: string[];
   inputFiles: string[];
+  onlyEsm: boolean;
 }

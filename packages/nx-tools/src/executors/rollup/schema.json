@@ -13,6 +13,11 @@
       },
       "default": []
     },
+    "onlyEsm": {
+      "type": "boolean",
+      "description": "Only generate esm output",
+      "default": false
+    },
     "rollupConfig": {
       "type": "string",
       "description": "Path to the rollup config file",
