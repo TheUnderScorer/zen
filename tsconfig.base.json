@@ -27,6 +27,7 @@
       "@theunderscorer/rpc-in-memory-link": [
         "packages/rpc-in-memory-link/src/index.ts"
       ],
+      "@theunderscorer/rpc-react": ["packages/rpc-react/src/index.ts"],
       "@theunderscorer/typed-di": ["packages/typed-di/src/index.ts"],
       "@theunderscorer/wait": ["packages/wait/src/index.ts"],
       "nx-tools": ["packages/nx-tools/src/index.ts"],
