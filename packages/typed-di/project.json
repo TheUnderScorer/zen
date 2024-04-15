@@ -10,7 +10,8 @@
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/typed-di",
-        "inputFiles": ["index.ts"]
+        "inputFiles": ["index.ts"],
+        "onlyEsm": true
       }
     },
     "semantic-release": {
