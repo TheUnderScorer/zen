@@ -190,8 +190,6 @@ importers:
 
   packages/rpc-react: {}
 
-  packages/rpc-test-utils: {}
-
   packages/typed-di: {}
 
   packages/wait: {}
