@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/TheUnderScorer/zen/compare/chain-v1.1.0...chain-v1.1.1) (2024-04-15)
+
+### Bug Fixes
+
+- add dependency to nx-tools ([b21c177](https://github.com/TheUnderScorer/zen/commit/b21c177106ca681e0031d9af028f5704f4403fff))
+- add missing main field ([ba3c8ca](https://github.com/TheUnderScorer/zen/commit/ba3c8ca03266c9874e5f7392d7ab7d4b2f25d02f))
+
 ## [1.1.0](https://github.com/TheUnderScorer/zen/compare/chain-v1.0.0...chain-v1.1.0) (2024-04-15)
 
 ### Features
