@@ -16,7 +16,6 @@ export * from './shared/link.types';
 export * from './zod/validateZod';
 export * from './errors/RpcError';
 export * from './errors/RpcZodError';
-export * from './utils/wait';
 export * from './receiver/OperationReceiverBuilder';
 export * from './utils/id';
 export * from './shared/merge';
