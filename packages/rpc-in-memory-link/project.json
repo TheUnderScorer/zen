@@ -1,0 +1,23 @@
+{
+  "name": "rpc-in-memory-link",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/rpc-in-memory-link/src",
+  "targets": {
+    "build": {
+      "executor": "nx-tools:rollup",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/rpc-in-memory-link",
+        "inputFiles": ["index.ts"]
+      }
+    },
+    "semantic-release": {
+      "executor": "@theunderscorer/nx-semantic-release:semantic-release",
+      "options": {
+        "buildTarget": "rpc-in-memory-link:build",
+        "tagFormat": "rpc-in-memory-link-v${VERSION}",
+        "outputPath": "dist/packages/rpc-in-memory-link"
+      }
+    }
+  }
+}
