@@ -1,3 +1,9 @@
+## [1.0.1](https://github.com/TheUnderScorer/zen/compare/rpc-core-v1.0.0...rpc-core-v1.0.1) (2024-04-15)
+
+### Bug Fixes
+
+- remove "wait" import ([6fffc95](https://github.com/TheUnderScorer/zen/commit/6fffc95637b02aec063afaefdbf779ccbee917e4))
+
 ## 1.0.0 (2024-04-15)
 
 ### Features
