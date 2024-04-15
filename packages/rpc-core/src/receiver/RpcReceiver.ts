@@ -23,10 +23,10 @@ import { Chain } from '@theunderscorer/chain';
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export class RpcReceiver<S extends OperationsSchema, Ctx = any> {
-  private readonly links: ReceiverLink<Ctx>[];
+  protected readonly links: ReceiverLink<Ctx>[];
 
   constructor(
-    private readonly schema: S,
+    protected readonly schema: S,
     links: LinkParam<ReceiverLink<Ctx>>[]
   ) {
     this.links = createLinks(links, schema);
