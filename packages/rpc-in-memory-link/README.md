@@ -21,40 +21,44 @@ npm install @theunderscorer/rpc-in-memory-link
 ```
 
 ## Usage
+
 ```ts
-import { defineRpcSchema, RpcClient, RpcReceiver } from "@theunderscorer/rpc-core";
-import { createInMemoryLink } from "@theunderscorer/rpc-in-memory-link";
-import { z } from "zod";
+import {
+  defineRpcSchema,
+  RpcClient,
+  RpcReceiver,
+} from '@theunderscorer/rpc-core';
+import { createInMemoryLink } from '@theunderscorer/rpc-in-memory-link';
+import { z } from 'zod';
 
 const schema = defineRpcSchema({
   queries: {
     greet: query()
       .needs(
         z.object({
-          name: z.string()
+          name: z.string(),
         })
       )
-      .returns(z.string())
-  }
+      .returns(z.string()),
+  },
 });
 
 const memoryLink = createInMemoryLink();
 
 const receiver = new RpcReceiver(schema, [memoryLink.receiver]);
 
-receiver.handleQuery('greet', payload => `Hello ${payload.name}`);
+receiver.handleQuery('greet', (payload) => `Hello ${payload.name}`);
 
 async function main() {
   const client = new RpcClient(schema, [memoryLink.client]);
 
   // Querying the greeting
-  const response = await client.query("greet", {
-    name: "John"
+  const response = await client.query('greet', {
+    name: 'John',
   });
 
-  console.log("response", response); // Hello John
+  console.log('response', response); // Hello John
 }
-
 ```
 
 ## Building

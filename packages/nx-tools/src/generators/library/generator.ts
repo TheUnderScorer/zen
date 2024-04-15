@@ -16,30 +16,36 @@ export default async function (tree: Tree, schema: LibraryGeneratorOptions) {
   const importPath = `@theunderscorer/${schema.name}`;
   const outputPath = `dist/packages/${schema.name}`;
 
-  logger.info(`Creating ${schema.private ? 'private' : 'public'} library ${schema.name} in ${libraryRoot}`);
+  logger.info(
+    `Creating ${schema.private ? 'private' : 'public'} library ${
+      schema.name
+    } in ${libraryRoot}`
+  );
 
   addProjectConfiguration(tree, schema.name, {
     name: schema.name,
     root: libraryRoot,
     sourceRoot: path.join(libraryRoot, 'src'),
-    targets: schema.private ? {} : {
-      build: {
-        executor: 'nx-tools:rollup',
-        outputs: ['{options.outputPath}'],
-        options: {
-          outputPath,
-          inputFiles: ['index.ts'],
+    targets: schema.private
+      ? {}
+      : {
+          build: {
+            executor: 'nx-tools:rollup',
+            outputs: ['{options.outputPath}'],
+            options: {
+              outputPath,
+              inputFiles: ['index.ts'],
+            },
+          },
+          'semantic-release': {
+            executor: '@theunderscorer/nx-semantic-release:semantic-release',
+            options: {
+              buildTarget: `${schema.name}:build`,
+              tagFormat: `${schema.name}-v$\{VERSION}`,
+              outputPath,
+            },
+          },
         },
-      },
-      'semantic-release': {
-        executor: '@theunderscorer/nx-semantic-release:semantic-release',
-        options: {
-          buildTarget: `${schema.name}:build`,
-          tagFormat: `${schema.name}-v$\{VERSION}`,
-          outputPath,
-        },
-      },
-    },
   });
 
   generateFiles(
