@@ -42,13 +42,18 @@ export default async function runExecutor(
   invariant(context.targetName, 'Target name is required');
   invariant(projectGraph.data.sourceRoot, 'Source root is required');
 
-  const { dependencies } = calculateProjectDependencies(
+  const calculatedProjectDeps = calculateProjectDependencies(
     context.projectGraph,
     context.root,
     context.projectName,
     context.targetName,
     context.configurationName ?? ''
   );
+  const dependencies = calculatedProjectDeps.dependencies.filter((dep) => {
+    const [, name] = dep.name.split('/');
+
+    return !name || name !== context.projectName;
+  });
 
   const projectGraphDependencies =
     context.projectGraph.dependencies[context.projectName] ?? [];

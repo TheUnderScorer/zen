@@ -1,6 +1,7 @@
 import { RollupExecutorSchema } from './schema';
 import { ExecutorContext } from 'nx/src/config/misc-interfaces';
 import typescript from '@rollup/plugin-typescript';
+// @ts-expect-error - no types available
 import external from 'rollup-plugin-peer-deps-external';
 import dtsPlugin from 'rollup-plugin-dts';
 import * as path from 'path';
