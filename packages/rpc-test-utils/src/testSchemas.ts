@@ -19,47 +19,47 @@ export const Post = z.object({
 export const testUserSchema = defineRpcSchema({
   commands: {
     createUser: command()
-      .withPayload(
+      .needs(
         z.object({
           name: z.string(),
         })
       )
-      .withResult(User),
+      .returns(User),
   },
   events: {
-    userCreated: event().withPayload(User),
+    userCreated: event().needs(User),
   },
   queries: {
     getUser: query()
-      .withPayload(
+      .needs(
         z.object({
           id: z.coerce.string(),
         })
       )
-      .withResult(User.optional()),
+      .returns(User.optional()),
   },
 });
 
 export const testPostSchema = defineRpcSchema({
   commands: {
     createPost: command()
-      .withPayload(
+      .needs(
         z.object({
           title: z.string(),
         })
       )
-      .withResult(Post),
+      .returns(Post),
   },
   events: {
-    postCreated: event().withPayload(Post),
+    postCreated: event().needs(Post),
   },
   queries: {
     getPost: query()
-      .withPayload(
+      .needs(
         z.object({
           id: z.string(),
         })
       )
-      .withResult(Post),
+      .returns(Post),
   },
 });

@@ -38,12 +38,12 @@ import { z } from "zod";
 const schema = defineSchema({
   queries: {
     greet: query()
-      .withPayload(
+      .needs(
         z.object({
           name: z.string()
         })
       )
-      .withResult(z.string())
+      .returns(z.string())
   }
 });
 

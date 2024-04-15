@@ -53,8 +53,8 @@ export class RpcOperationDefinition<
     );
   }
 
-  withPayload<P>(): RpcOperationDefinition<Kind, Name, P, Result, Meta>;
-  withPayload<P extends ZodSchema>(
+  needs<P>(): RpcOperationDefinition<Kind, Name, P, Result, Meta>;
+  needs<P extends ZodSchema>(
     zod: P
   ): RpcOperationDefinition<Kind, Name, P, Result, Meta>;
 
@@ -65,12 +65,12 @@ export class RpcOperationDefinition<
    * @example
    * ```ts
    * // Using zod
-   * definition.withPayload(z.object({ id: z.number() }))
+   * definition.needs(z.object({ id: z.number() }))
    *
    * // Using typescript
-   * definition.withPayload<{ id: number }>()
+   * definition.needs<{ id: number }>()
    * */
-  withPayload<P extends ZodSchema>(zodSchema?: P) {
+  needs<P extends ZodSchema>(zodSchema?: P) {
     if (zodSchema) {
       Object.assign(this, {
         payload: zodSchema,
@@ -91,7 +91,7 @@ export class RpcOperationDefinition<
    *
    * Note: it is not required to call it manually. Name will be automatically set by `defineRpcSchema` function.
    * */
-  withName<N extends RpcOperationName>(name: N) {
+  named<N extends RpcOperationName>(name: N) {
     Object.assign(this, {
       name,
     });
@@ -105,8 +105,8 @@ export class RpcOperationDefinition<
     >;
   }
 
-  withResult<R>(): RpcOperationDefinition<Kind, Name, Payload, R, Meta>;
-  withResult<R>(
+  returns<R>(): RpcOperationDefinition<Kind, Name, Payload, R, Meta>;
+  returns<R>(
     zod: ZodSchema<R>
   ): RpcOperationDefinition<Kind, Name, Payload, R, Meta>;
 
@@ -117,12 +117,12 @@ export class RpcOperationDefinition<
    * @example
    * ```ts
    * // Using zod
-   * definition.withResult(z.object({ id: z.number() }))
+   * definition.returns(z.object({ id: z.number() }))
    *
    * // Using typescript
-   * definition.withResult<{ id: number }>()
+   * definition.returns<{ id: number }>()
    * */
-  withResult<R extends ZodSchema>(zodSchema?: R) {
+  returns<R extends ZodSchema>(zodSchema?: R) {
     if (this.kind === RpcOperationKind.Event) {
       throw new TypeError('Events cannot have a result');
     }
@@ -152,7 +152,7 @@ export class RpcOperationDefinition<
    *
    * const schema = defineRpcSchema({
    *   commands: {
-   *     createPost: command().withMeta({ auth: true })
+   *     createPost: command().addMeta({ auth: true })
    *   }
    * });
    *
@@ -164,7 +164,7 @@ export class RpcOperationDefinition<
    *  schema.commands.createPost.meta.auth // true
    * );
    * */
-  withMeta<M extends Record<string, any>>(meta: M | ((definition: this) => M)) {
+  addMeta<M extends Record<string, any>>(meta: M | ((definition: this) => M)) {
     Object.assign(this, {
       meta: {
         ...this.meta,

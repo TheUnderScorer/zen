@@ -14,16 +14,14 @@ describe('InMemoryLink', () => {
   const schema = defineRpcSchema({
     commands: {
       testCommand: command()
-        .withPayload<{ test: string }>()
-        .withResult<{ test: string }>(),
+        .needs<{ test: string }>()
+        .returns<{ test: string }>(),
     },
     queries: {
-      testQuery: query()
-        .withPayload<{ test: string }>()
-        .withResult<{ test: string }>(),
+      testQuery: query().needs<{ test: string }>().returns<{ test: string }>(),
     },
     events: {
-      testEvent: event().withPayload<{ test: string }>(),
+      testEvent: event().needs<{ test: string }>(),
     },
   });
 

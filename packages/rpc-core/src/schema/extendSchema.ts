@@ -30,12 +30,12 @@ type ExtendedSchema<
  * const baseSchema = defineRpcSchema({
  *   commands: {
  *     replaceContent: command()
- *       .withPayload(replaceContentSchema)
- *       .withResult<void>(),
+ *       .needs(replaceContentSchema)
+ *       .returns<void>(),
  *     closeRightTab: command(),
  *   },
  *   events: {
- *     tabCreated: event().withPayload(
+ *     tabCreated: event().needs(
  *       z.object({
  *         id: z.number(),
  *       })
@@ -43,7 +43,7 @@ type ExtendedSchema<
  *     contentReplaced: event(),
  *   },
  *   queries: {
- *     getAllTabIds: query().withResult(z.array(z.number())),
+ *     getAllTabIds: query().returns(z.array(z.number())),
  *   },
  * });
  *
@@ -52,14 +52,14 @@ type ExtendedSchema<
  * export const browserExtensionSchema = extendSchema(baseSchema, {
  *   commands: {
  *     replaceContent: (def) =>
- *       def.withMeta<BrowserExtensionLinkMeta>({
+ *       def.addMeta<BrowserExtensionLinkMeta>({
  *         browserExtensionChannel: {
  *           type: 'background',
  *         },,
  *       }),
  *
  *     closeRightTab: (def) =>
- *       def.withMeta<BrowserExtensionLinkMeta>({
+ *       def.addMeta<BrowserExtensionLinkMeta>({
  *         browserExtensionChannel: {
  *           type: 'background',
  *         },
@@ -67,7 +67,7 @@ type ExtendedSchema<
  *   },
  *   queries: {
  *     getAllTabIds: (def) =>
- *       def.withMeta<BrowserExtensionLinkMeta>({
+ *       def.addMeta<BrowserExtensionLinkMeta>({
  *         browserExtensionChannel: {
  *           type: 'background',
  *         },
