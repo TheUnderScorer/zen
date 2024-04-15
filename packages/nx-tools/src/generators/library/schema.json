@@ -13,7 +13,14 @@
         "index": 0
       },
       "x-prompt": "What name would you like to use?"
+    },
+    "private": {
+      "type": "boolean",
+      "description": "Is this library private?",
+      "default": false
     }
   },
-  "required": ["name"]
+  "required": [
+    "name"
+  ]
 }

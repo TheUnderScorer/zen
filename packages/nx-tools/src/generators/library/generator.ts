@@ -16,12 +16,12 @@ export default async function (tree: Tree, schema: LibraryGeneratorOptions) {
   const importPath = `@theunderscorer/${schema.name}`;
   const outputPath = `dist/packages/${schema.name}`;
 
-  logger.info(`Creating library ${schema.name} in ${libraryRoot}`);
+  logger.info(`Creating ${schema.private ? 'private' : 'public'} library ${schema.name} in ${libraryRoot}`);
 
   addProjectConfiguration(tree, schema.name, {
     name: schema.name,
     root: libraryRoot,
-    targets: {
+    targets: schema.private ? {} : {
       build: {
         executor: 'nx-tools:rollup',
         outputs: ['{options.outputPath}'],

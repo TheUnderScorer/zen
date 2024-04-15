@@ -2,6 +2,7 @@
   "name": "@theunderscorer/<%= name %>",
   "version": "0.0.1",
   "dependencies": {},
+  <% if(!private) { %>
   "private": false,
   "sideEffects": false,
   "license": "MIT",
@@ -9,4 +10,8 @@
     "access": "public",
     "registry": "https://registry.npmjs.org/"
   }
+  <% } %>
+  <% if(private) { %>
+  "private": true,
+  <% } %>
 }

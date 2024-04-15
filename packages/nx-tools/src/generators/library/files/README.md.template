@@ -4,6 +4,7 @@ This library was generated with [Nx](https://nx.dev) and is part of the Zen, a l
 
 ![logo.png](../../assets/logo.png)
 
+<% if(!private) { %>
 ## Install
 
 With pnpm:
@@ -15,7 +16,7 @@ With npm:
 ```bash
 npm install @theunderscorer/<%= name %>
 ```
-
+<% } %>
 ## Building
 
 Run `nx build <%= name %>` to build the library.
