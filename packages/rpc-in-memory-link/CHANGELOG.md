@@ -1,3 +1,9 @@
+## [1.1.0](https://github.com/TheUnderScorer/zen/compare/rpc-in-memory-link-v1.0.2...rpc-in-memory-link-v1.1.0) (2024-04-15)
+
+### Features
+
+- make schema protected rather than private ([8edf33e](https://github.com/TheUnderScorer/zen/commit/8edf33e22fc417871393a83b5206fede536d35d1))
+
 ## [1.0.2](https://github.com/TheUnderScorer/zen/compare/rpc-in-memory-link-v1.0.1...rpc-in-memory-link-v1.0.2) (2024-04-15)
 
 ### Bug Fixes
