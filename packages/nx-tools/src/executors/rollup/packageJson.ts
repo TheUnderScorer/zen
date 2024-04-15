@@ -107,6 +107,10 @@ export async function updatePackageJson(
     });
   });
 
+  if (options.onlyEsm) {
+    result.type = 'module';
+  }
+
   const packageJsons = [rootPackageJson, projectPackageJson];
 
   for (const dep of dependencies) {
