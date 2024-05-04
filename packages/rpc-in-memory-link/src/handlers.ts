@@ -12,6 +12,7 @@ export type EventHandler<Ctx = any> = <Payload>(
 
 export function createHandlers() {
   return {
+    registeredOperations: new Set<string>(),
     operation: new Observable<OperationRequest>(),
     operationResult: new Observable<OperationResponse>(),
     event: new Observable<OperationResponse>(),

@@ -23,10 +23,20 @@ export class InMemoryReceiverLink<Ctx = any> implements ReceiverLink<Ctx> {
   }
 
   receiveRequest(name: RpcOperationName) {
-    return this.handlers.operation
+    this.handlers.registeredOperations.add(name);
+
+    const observable = this.handlers.operation
       .lift()
       .filter((req) => req.name === name) as Observable<
       OperationRequest<unknown, Ctx>
     >;
+
+    observable.subscribe({
+      complete: () => {
+        this.handlers.registeredOperations.delete(name);
+      },
+    });
+
+    return observable;
   }
 }

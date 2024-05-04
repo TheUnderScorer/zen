@@ -18,9 +18,15 @@ export class InMemoryClientLink<Ctx = any> implements ClientLink<Ctx> {
     >;
   }
 
-  sendRequest<Payload, Result>(
+  async sendRequest<Payload, Result>(
     request: OperationRequest<Payload, Ctx>
   ): Promise<OperationResponse<Result, OperationRequest<Payload, Ctx>>> {
+    if (!this.handlers.registeredOperations.has(request.name)) {
+      throw new Error(
+        `Operation handler for ${request.name} is not registered`
+      );
+    }
+
     return new Promise((resolve) => {
       const subscription = this.handlers.operationResult.subscribe(
         (response) => {

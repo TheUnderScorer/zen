@@ -27,12 +27,13 @@ describe('InMemoryLink', () => {
 
   let client: RpcClient<typeof schema>;
   let receiver: RpcReceiver<typeof schema>;
+  let link: ReturnType<typeof createInMemoryLink>;
 
   beforeEach(() => {
-    const links = createInMemoryLink();
+    link = createInMemoryLink();
 
-    client = new RpcClient(schema, [links.client]);
-    receiver = new RpcReceiver(schema, [links.receiver]);
+    client = new RpcClient(schema, [link.client]);
+    receiver = new RpcReceiver(schema, [link.receiver]);
   });
 
   it('should correctly dispose receiver subscriptions', async () => {
@@ -51,18 +52,19 @@ describe('InMemoryLink', () => {
 
     expect(result).toEqual({ test: 'test' });
 
+    expect(link.handlers.registeredOperations).toContain('testCommand');
+
     await sub.unsubscribe();
 
-    const promise = Promise.race([
-      client.command('testCommand', {
-        test: 'test',
-      }),
-      wait(1000).then(() => {
-        throw new Error('Timeout');
-      }),
-    ]);
+    const promise = client.command('testCommand', {
+      test: 'test',
+    });
 
-    await expect(promise).rejects.toThrow('Timeout');
+    await expect(promise).rejects.toThrow(
+      'Operation handler for testCommand is not registered'
+    );
+
+    expect(link.handlers.registeredOperations).not.toContain('testCommand');
 
     // Restore handler
     receiver.handleCommand('testCommand', handler);
@@ -134,5 +136,13 @@ describe('InMemoryLink', () => {
       payload: { test: 'test1' },
       ctx: {},
     });
+  });
+
+  it('send command without registered handler', async () => {
+    await expect(
+      client.command('testCommand', {
+        test: 'test',
+      })
+    ).rejects.toThrow('Operation handler for testCommand is not registered');
   });
 });
