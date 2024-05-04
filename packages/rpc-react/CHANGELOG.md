@@ -1,3 +1,10 @@
+## [1.1.1](https://github.com/TheUnderScorer/zen/compare/rpc-react-v1.1.0...rpc-react-v1.1.1) (2024-05-04)
+
+### Bug Fixes
+
+- **in-memory-link:** throw if handler is not registered ([be7ec7c](https://github.com/TheUnderScorer/zen/commit/be7ec7c6762ede73dc2e4bbc98ae8bef831a1717))
+- **in-memory-link:** unsubscribe from request sub if handlers fail ([d9feca6](https://github.com/TheUnderScorer/zen/commit/d9feca675353d47e4da0022dee8f0978faf8ebbc))
+
 ## [1.1.0](https://github.com/TheUnderScorer/zen/compare/rpc-react-v1.0.1...rpc-react-v1.1.0) (2024-04-15)
 
 ### Features
