@@ -36,7 +36,9 @@ export class InMemoryClientLink<Ctx = any> implements ClientLink<Ctx> {
         }
       );
 
-      this.handlers.operation.next(request);
+      this.handlers.operation.next(request).finally(async () => {
+        subscription.unsubscribe();
+      });
     });
   }
 }
