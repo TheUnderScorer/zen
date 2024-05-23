@@ -1,3 +1,9 @@
+## [1.1.2](https://github.com/TheUnderScorer/zen/compare/rpc-in-memory-link-v1.1.1...rpc-in-memory-link-v1.1.2) (2024-05-23)
+
+### Bug Fixes
+
+- **rpc-core:** export OperationEnvelope ([27855a5](https://github.com/TheUnderScorer/zen/commit/27855a5560c9dddf6bec7871690b5c45f81affa1))
+
 ## [1.1.1](https://github.com/TheUnderScorer/zen/compare/rpc-in-memory-link-v1.1.0...rpc-in-memory-link-v1.1.1) (2024-05-04)
 
 ### Bug Fixes
