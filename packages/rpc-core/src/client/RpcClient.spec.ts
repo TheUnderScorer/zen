@@ -4,6 +4,7 @@ import { RpcReceiver } from '../receiver/RpcReceiver';
 import { mergeSchemas } from '../schema/schemaHelpers';
 import { RpcZodError } from '../errors/RpcZodError';
 import { createTestLink, testPostSchema, testUserSchema } from 'rpc-test-utils';
+import { createRpc } from '@theunderscorer/rpc-core';
 
 const schema = mergeSchemas(testUserSchema, testPostSchema);
 
@@ -206,5 +207,76 @@ describe('RpcClient', () => {
     expect(onLinkEvent).toHaveBeenCalledTimes(6);
     expect(onEvent).toHaveBeenCalledTimes(3);
     expect(onEvent).toHaveBeenCalledWith({ payload, ctx: {} });
+  });
+
+  it('should unsub from event', async () => {
+    const { client, receiver } = createRpc({
+      schema,
+      clientLinks: [clientLink],
+      receiverLinks: [receiverLink],
+    });
+
+    const onEvent = jest.fn();
+
+    receiver.handleCommand('createUser', async (payload) => {
+      const user = {
+        name: payload.name,
+        id: '1',
+      };
+
+      await receiver.dispatchEvent('userCreated', user);
+
+      return user;
+    });
+
+    const observable = client.observeEvent('userCreated');
+    const sub = observable.subscribe(onEvent);
+
+    await client.command('createUser', {
+      name: 'Test',
+    });
+
+    expect(onEvent).toHaveBeenCalledTimes(1);
+
+    await sub.unsubscribe();
+
+    await client.command('createUser', {
+      name: 'Test',
+    });
+
+    expect(onEvent).toHaveBeenCalledTimes(1);
+
+    await observable.completeAll();
+
+    expect(observable.isCompleted).toBe(true);
+  });
+
+  it('should propagate errors from events', async () => {
+    const { client, receiver } = createRpc({
+      schema,
+      clientLinks: [clientLink],
+      receiverLinks: [receiverLink],
+    });
+
+    receiver.handleCommand('createUser', async (payload) => {
+      const user = {
+        name: payload.name,
+        id: '1',
+      };
+
+      await receiver.dispatchEvent('userCreated', user);
+
+      return user;
+    });
+
+    client.observeEvent('userCreated').subscribe(() => {
+      throw new Error('test');
+    });
+
+    await expect(
+      client.command('createUser', {
+        name: 'Test',
+      })
+    ).rejects.toThrow('test');
   });
 });

@@ -113,7 +113,7 @@ export class RpcClient<S extends OperationsSchema, Ctx = any> {
       }
     }
 
-    return chain.exec(request).map((event) => ({
+    const observable = chain.exec(request).map((event) => ({
       payload: validatePayload(
         this.schema,
         RpcOperationKind.Event,
@@ -122,6 +122,15 @@ export class RpcClient<S extends OperationsSchema, Ctx = any> {
       ),
       ctx: event.ctx as Ctx,
     }));
+
+    observable.subscribe({
+      error: (err) => {
+        // Propagate error from event
+        throw err;
+      },
+    });
+
+    return observable;
   }
 
   private async sendOperation<Name extends RpcOperationName, Payload, Result>(
