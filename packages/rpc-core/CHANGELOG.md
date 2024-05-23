@@ -1,3 +1,9 @@
+## [1.2.0](https://github.com/TheUnderScorer/zen/compare/rpc-core-v1.1.1...rpc-core-v1.2.0) (2024-05-23)
+
+### Features
+
+- **rpc-core:** propagate errors thrown in events ([7176ccf](https://github.com/TheUnderScorer/zen/commit/7176ccf89d9376b47a41e7a4a760080ecc86ae8e))
+
 ## [1.1.1](https://github.com/TheUnderScorer/zen/compare/rpc-core-v1.1.0...rpc-core-v1.1.1) (2024-05-23)
 
 ### Bug Fixes
