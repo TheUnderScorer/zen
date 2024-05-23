@@ -7,6 +7,7 @@ export * from './schema/schemaHelpers';
 export * from './schema/RpcOperationDefinition';
 export * from './shared/OperationRequest';
 export * from './shared/OperationResponse';
+export * from './shared/OperationEnvelope';
 export * from './shared/communication.types';
 export * from './schema/validation';
 export * from './rpc';
