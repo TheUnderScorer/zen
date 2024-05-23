@@ -1,6 +1,6 @@
 {
   "name": "@theunderscorer/rpc-in-memory-link",
-  "version": "1.1.2",
+  "version": "1.2.0",
   "dependencies": {},
   "private": false,
   "sideEffects": false,
